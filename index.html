@@ -348,6 +348,255 @@ canvas{max-width:100%;}
 @keyframes card-pulse{0%,100%{box-shadow:0 0 0 rgba(0,170,255,0);}50%{box-shadow:0 0 20px rgba(0,170,255,0.12);}}
 .flex-between{display:flex;align-items:center;justify-content:space-between;}
 .flex-row{display:flex;align-items:center;gap:8px;}
+
+/* ============================================================
+   RESPONSIVE - MOBILE FIRST
+============================================================ */
+
+/* Tablet (max 900px) */
+@media(max-width:900px){
+  .header{padding:0 12px;gap:10px;}
+  .logo-text{font-size:16px;}
+  .logo-svg{width:28px;height:28px;}
+  .header-divider{display:none;}
+  .live-pill{padding:4px 8px;font-size:9px;}
+  .live-pill span{display:none;}
+  .hdr-btn{width:30px;height:30px;}
+  
+  .tabbar{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tab{padding:0 10px;font-size:12px;min-width:auto;flex:0 0 auto;}
+  .tab span:not(.tab-icon):not(.tab-badge):not(.tab-star){display:none;}
+  .tab-icon{font-size:18px;}
+  .tab-badge,.tab-star{font-size:8px;padding:2px 5px;}
+  
+  .ticker{height:32px;}
+  .ticker-label{padding:0 10px;font-size:10px;}
+  .tick-item{font-size:11px;padding:0 16px;}
+  
+  .main{padding:16px;margin-top:138px;}
+  
+  .hero{padding:20px;border-radius:14px;}
+  .hero-inner{grid-template-columns:1fr!important;}
+  .hero-chart{width:100%;min-width:auto;margin-top:16px;}
+  .hero-title{font-size:24px;}
+  .hero-desc{font-size:13px;}
+  .hero-stats{gap:14px;}
+  .hstat{padding-right:14px;}
+  .hstat-val{font-size:18px;}
+  .hstat-label{font-size:10px;}
+  
+  .zone-cards{grid-template-columns:1fr;}
+  .zone-card{padding:16px;}
+  .zone-card-icon{font-size:26px;}
+  .zone-card-name{font-size:15px;}
+  
+  .flow-diagram{flex-wrap:wrap;gap:8px;padding:16px 12px;}
+  .flow-step{min-width:60px;}
+  .flow-icon{width:42px;height:42px;font-size:16px;}
+  .flow-label{font-size:10px;}
+  .flow-arrow{font-size:16px;display:none;}
+  
+  .card-value{font-size:24px;}
+  .card-label{font-size:10px;}
+  
+  .model-compare-grid{grid-template-columns:repeat(2,1fr);}
+  .model-crd{padding:12px 10px;}
+  .model-crd-name{font-size:10px;}
+  .model-crd-r2{font-size:16px;}
+  
+  .sim-climate-grid{grid-template-columns:1fr 1fr;}
+  
+  .dual-maps{grid-template-columns:1fr;}
+  #map-ewars,#map-ec{height:320px;}
+  .map-ctrl-bar{flex-direction:column;align-items:stretch;gap:12px;}
+  .map-ctrl-sep{display:none;}
+  .week-slider-wrap{width:100%;}
+  .map-stats-bar{grid-template-columns:1fr;}
+  
+  .forecast-week-grid{grid-template-columns:repeat(7,1fr);gap:6px;}
+  .fc-week{padding:8px 4px;}
+  .fc-wnum{font-size:8px;}
+  .fc-total{font-size:12px;}
+  
+  .method-step{flex-direction:column;gap:12px;}
+  .method-num{width:36px;height:36px;font-size:16px;}
+  
+  .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{min-width:600px;}
+  thead th{font-size:10px;padding:8px 10px;}
+  tbody tr td{font-size:12px;padding:8px 10px;}
+}
+
+/* Mobile (max 600px) */
+@media(max-width:600px){
+  .header{height:50px;padding:0 10px;gap:8px;justify-content:center;}
+  .logo-svg{width:26px;height:26px;}
+  .logo-text{font-size:15px;}
+  .live-pill{display:none;}
+  .hdr-btn{width:28px;height:28px;}
+  .hdr-btn svg{width:14px;height:14px;}
+  
+  .tabbar{height:44px;top:50px;justify-content:center;}
+  .tab{height:44px;padding:0 8px;}
+  .tab-icon{font-size:16px;}
+  
+  .ticker{top:94px;height:28px;}
+  .ticker-label{font-size:9px;padding:0 8px;letter-spacing:0.5px;}
+  .tick-item{font-size:10px;padding:0 12px;}
+  
+  .main{margin-top:122px;padding:12px;text-align:center;}
+  
+  .hero{padding:16px;margin-bottom:16px;text-align:center;}
+  .hero-eyebrow{font-size:10px;padding:4px 10px;margin-left:auto;margin-right:auto;}
+  .hero-title{font-size:20px;margin-bottom:10px;text-align:center;}
+  .hero-desc{font-size:12px;margin-bottom:14px;line-height:1.6;text-align:center;margin-left:auto;margin-right:auto;}
+  .hero-stats{flex-direction:column;gap:10px;align-items:center;}
+  .hstat{padding-right:0;border-right:none;border-bottom:1px solid var(--bord);padding-bottom:10px;text-align:center;}
+  .hstat:last-child{border-bottom:none;padding-bottom:0;}
+  .hstat-val{font-size:20px;}
+  .hero-chart{padding:12px;margin-left:auto;margin-right:auto;}
+  .hero-chart-title{font-size:10px;text-align:center;}
+  
+  .hero-jkt-wrap{width:100%;height:200px;margin-top:16px;margin-left:auto;margin-right:auto;}
+  
+  .g1,.g2,.g3,.g4,.g-7-3,.g-3-7,.g-5-5{grid-template-columns:1fr!important;gap:12px;}
+  
+  .card{padding:14px;border-radius:12px;text-align:center;}
+  .card-value{font-size:22px;}
+  .card-title{font-size:13px;}
+  .card-subtitle{font-size:11px;margin-bottom:10px;}
+  .card-sub{font-size:11px;text-align:center;width:100%;}
+  .card-trend{text-align:center;width:100%;justify-content:center;}
+  .card-label{text-align:center;width:100%;}
+  
+  .sec-head{flex-direction:column;align-items:center;gap:4px;text-align:center;}
+  .sec-title{font-size:13px;justify-content:center;}
+  .sec-sub{font-size:10px;}
+  
+  .zone-cards{gap:12px;}
+  .zone-card{padding:14px;text-align:center;}
+  .zone-card-icon{font-size:24px;margin-bottom:8px;}
+  .zone-card-name{font-size:14px;}
+  .zone-card-threshold{font-size:11px;padding:2px 7px;}
+  .zone-card-desc{font-size:11.5px;}
+  
+  .flow-diagram{padding:12px 10px;gap:6px;justify-content:center;}
+  .flow-step{min-width:50px;}
+  .flow-icon{width:38px;height:38px;font-size:14px;}
+  .flow-number{width:14px;height:14px;font-size:8px;top:-4px;right:-4px;}
+  .flow-label{font-size:9px;}
+  
+  .model-compare-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .model-crd{padding:10px 8px;border-radius:10px;text-align:center;}
+  .model-crd-name{font-size:9px;}
+  .model-crd-r2{font-size:14px;}
+  .model-crd-mae{font-size:9px;}
+  .model-crd.best::after{font-size:7px;padding:2px 5px;}
+  
+  .sim-tabs{flex-wrap:wrap;justify-content:center;}
+  .sim-tab{font-size:11px;padding:8px 10px;}
+  .sim-climate-grid{grid-template-columns:1fr;}
+  .sim-climate-card{padding:14px;text-align:center;}
+  .sim-climate-icon{font-size:20px;}
+  .sim-val-display{font-size:18px;}
+  .sim-result-val{font-size:36px;}
+  .sim-zones{flex-direction:column;gap:10px;align-items:center;}
+  .sim-zone-card{max-width:100%;text-align:center;}
+  
+  #map-ewars,#map-ec{height:280px;}
+  .map-header{padding:8px 10px;text-align:center;}
+  .map-header-title{font-size:11px;}
+  .map-legend{padding:8px 10px;bottom:6px;left:6px;}
+  .map-legend-title{font-size:8px;margin-bottom:5px;}
+  .map-legend-item{font-size:9px;gap:5px;}
+  .map-legend-dot{width:12px;height:8px;}
+  .map-stats-bar{padding:12px 14px;text-align:center;}
+  .map-stat-title{font-size:10px;}
+  .zone-bar{font-size:11px;}
+  .zone-bar-val{font-size:10px;}
+  
+  .forecast-week-grid{grid-template-columns:repeat(4,1fr);gap:5px;justify-content:center;}
+  .fc-week{padding:6px 3px;border-radius:8px;text-align:center;}
+  .fc-wnum{font-size:7px;}
+  .fc-total{font-size:11px;}
+  .fc-bar-wrap{height:3px;margin-top:3px;}
+  .fc-zone-row{margin-top:3px;justify-content:center;}
+  .fc-zone-dot{width:4px;height:4px;}
+  
+  .tbl-wrap{border-radius:10px;}
+  .tbl-hrow{padding:10px 14px;justify-content:center;text-align:center;}
+  .tbl-htitle{font-size:12px;}
+  table{min-width:500px;}
+  thead th{font-size:9px;padding:6px 8px;text-align:center;}
+  tbody tr td{font-size:11px;padding:6px 8px;text-align:center;}
+  
+  .info-box{padding:12px;font-size:11.5px;gap:10px;text-align:center;justify-content:center;flex-direction:column;align-items:center;}
+  .info-icon{font-size:16px;}
+  
+  .ctrl-row{gap:8px;justify-content:center;flex-wrap:wrap;}
+  .ctrl-sel{padding:6px 10px;font-size:11px;padding-right:24px;}
+  .ctrl-label{font-size:10px;}
+  .ctrl-badge{font-size:10px;padding:3px 8px;}
+  
+  .btn{padding:8px 14px;font-size:11.5px;}
+  .btn-sm{padding:5px 10px;font-size:10px;}
+  
+  .zpill{font-size:10px;padding:3px 8px;}
+  .zdot{width:6px;height:6px;}
+  
+  .tag{font-size:9.5px;padding:3px 8px;}
+  
+  .method-step{padding:14px;text-align:center;flex-direction:column;align-items:center;}
+  .method-num{width:32px;height:32px;font-size:14px;border-radius:10px;}
+  .method-title{font-size:12px;}
+  .method-desc{font-size:12px;text-align:center;}
+  .method-tag{font-size:9px;padding:2px 6px;}
+.formula-block{padding:12px;font-size:10.5px;text-align:center;}
+  
+  .metric-bar{gap:8px;justify-content:center;flex-wrap:wrap;}
+  .metric-name{min-width:120px;font-size:10px;text-align:center;}
+  .metric-val{font-size:11px;min-width:40px;text-align:center;}
+  
+  .ch-200,.ch-260,.ch-280,.ch-320,.ch-360{height:200px;}
+  
+  .stat-table{font-size:10.5px;margin:0 auto;}
+  .stat-table td{padding:4px 8px;text-align:center;}
+  
+  .slider-wrap input[type=range]::-webkit-slider-thumb{width:14px;height:14px;}
+  .slider-row{font-size:10px;justify-content:center;}
+  
+  .week-disp{font-size:14px;padding:5px 10px;min-width:70px;}
+  .play-btn{width:32px;height:32px;font-size:12px;}
+  
+  .map-ctrl-bar{flex-direction:column;align-items:center;gap:12px;text-align:center;}
+  .week-slider-wrap{width:100%;display:flex;flex-direction:column;align-items:center;}
+  }
+
+/* Extra small mobile (max 400px) */
+@media(max-width:400px){
+  .header{padding:0 8px;justify-content:center;}
+  .logo-svg{width:24px;height:24px;}
+  .logo-text{font-size:14px;}
+  .hdr-btns{gap:4px;}
+  .hdr-btn{width:26px;height:26px;}
+  
+  .main{padding:10px;text-align:center;}
+  
+  .hero{padding:14px;text-align:center;}
+  .hero-title{font-size:18px;text-align:center;}
+  .hero-desc{font-size:11px;text-align:center;}
+  .hstat-val{font-size:18px;}
+  .hstat-label{font-size:9px;}
+  
+  .card{padding:12px;text-align:center;}
+  .card-value{font-size:20px;}
+  
+  .forecast-week-grid{grid-template-columns:repeat(3,1fr);}
+  
+  .model-compare-grid{grid-template-columns:1fr;}
+  
+  #map-ewars,#map-ec{height:240px;}
+}
 </style>
 </head>
 <body>
@@ -1241,6 +1490,9 @@ function zonaEC(pred, kec) {
 }
 // FC2026 diisi dari data/forecast_q1_2026.json setelah loadAllData()
 function getWeeklyTotals(year) {
+  if(window._historisWeekly && window._historisWeekly[String(year)]) {
+    return window._historisWeekly[String(year)];
+  }
   return Array.from({length:52},(_,i)=>KECAMATAN.reduce((s,k)=>s+getPred(k,year,i+1),0));
 }
 // KEC_POLYGONS dihapus — peta sekarang menggunakan GeoJSON dari data/jakarta.geojson
@@ -1426,31 +1678,31 @@ function initEDA() {
 function initModel() {
   const mc = document.getElementById('model-cards');
   MODELS.forEach(m=>{
-    mc.innerHTML+=`<div class="model-crd${m.best?' best':''}"><div class="model-crd-name">${m.name}</div><div class="model-crd-r2">${m.R2.toFixed(2)}</div><div class="model-crd-mae">MAE ${m.MAE.toFixed(2)}</div><div style="margin-top:8px;font-size:9.5px;color:var(--txt3)">RMSE ${m.RMSE.toFixed(2)} · MAPE ${m.MAPE}%</div></div>`;
+    mc.innerHTML+=`<div class="model-crd${m.best?' best':''}"><div class="model-crd-name">${m.name}</div><div class="model-crd-r2">${(m.R2||0).toFixed(2)}</div><div class="model-crd-mae">MAE ${(m.MAE||0).toFixed(2)}</div><div style="margin-top:8px;font-size:9.5px;color:var(--txt3)">RMSE ${(m.RMSE||0).toFixed(2)} · MAPE ${m.MAPE||0}%</div></div>`;
   });
   mkChart('chartRadar',{
     type:'radar',
     data:{
       labels:['R²','Akurasi MAE','Akurasi RMSE','Akurasi MAPE','Kecepatan'],
-      datasets:MODELS.map((m,i)=>({label:m.name,data:[m.R2,1-m.MAE/4,1-m.RMSE/6,1-m.MAPE/130,i===0?0.7:i===1?0.9:0.5],borderColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'1)',backgroundColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'0.08)',pointRadius:3,borderWidth:m.best?2.5:1.5}))
+      datasets:MODELS.map((m,i)=>({label:m.name,data:[m.R2||0,1-(m.MAE||0)/4,1-(m.RMSE||0)/6,1-(m.MAPE||0)/130,i===0?0.7:i===1?0.9:0.5],borderColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'1)',backgroundColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'0.08)',pointRadius:3,borderWidth:m.best?2.5:1.5}))
     },
     options:{scales:{r:{min:0,max:1,ticks:{stepSize:0.2,font:{size:9}},pointLabels:{font:{size:10.5},color:'#6fa8d0'}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}}}
   });
-  const foldData={naive:[0.14,0.17,0.18],poisson:[0.31,0.34,0.35],xgb:[0.68,0.70,0.71],lgb:[0.73,0.75,0.76],cat:[0.71,0.72,0.73]};
+  let foldData = window._cvFoldResults || {naive_baseline:[0.14,0.17,0.18],poisson_ridge:[0.31,0.34,0.35],xgboost:[0.68,0.70,0.71],lightgbm:[0.73,0.75,0.76],catboost:[0.71,0.72,0.73]};
   mkChart('chartFold',{
     type:'bar',
-    data:{labels:['2023','2024','2025'],datasets:MODELS.map((m,i)=>({label:m.name,data:foldData[m.key],backgroundColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'0.7)',borderWidth:0}))},
+    data:{labels:['2023','2024','2025'],datasets:MODELS.map((m,i)=>({label:m.name,data:foldData[m.key]||[0,0,0],backgroundColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'0.7)',borderWidth:0}))},
     options:{scales:{y:{max:1,title:{display:true,text:'R²',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}}}}
   });
   mkChart('chartSHAP',{
     type:'bar',
-    data:{labels:SHAP_FEATS.map(f=>f.name),datasets:[{label:'Mean SHAP absolut',data:SHAP_FEATS.map(f=>f.val),backgroundColor:SHAP_FEATS.map((_,i)=>`hsla(${195+i*10},80%,60%,0.8)`),borderWidth:0}]},
+    data:{labels:SHAP_FEATS.map(f=>f.name),datasets:[{label:'Mean SHAP absolut',data:SHAP_FEATS.map(f=>f.val||0),backgroundColor:SHAP_FEATS.map((_,i)=>`hsla(${195+i*10},80%,60%,0.8)`),borderWidth:0}]},
     options:{indexAxis:'y',scales:{x:{max:1,title:{display:true,text:'Mean nilai SHAP absolut',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false}}}
   });
   const se = document.getElementById('shap-explain');
   SHAP_FEATS.slice(0,5).forEach(f=>{
-    const pct = Math.round(f.val*100);
-    se.innerHTML+=`<div class="metric-bar" style="margin-bottom:10px"><div class="metric-name">${f.name}</div><div style="flex:1"><div class="prog-track"><div class="prog-fill" style="background:var(--c-blue);width:${pct}%"></div></div></div><div class="metric-val">${f.val.toFixed(2)}</div></div>`;
+    const pct = Math.round((f.val||0)*100);
+    se.innerHTML+=`<div class="metric-bar" style="margin-bottom:10px"><div class="metric-name">${f.name}</div><div style="flex:1"><div class="prog-track"><div class="prog-fill" style="background:var(--c-blue);width:${pct}%"></div></div></div><div class="metric-val">${(f.val||0).toFixed(2)}</div></div>`;
   });
   const scatterData=[];
   for(let i=0;i<180;i++){const a=Math.max(0,Math.random()*12);scatterData.push({x:+(a).toFixed(1),y:+(a*(0.85+Math.random()*0.3)+Math.random()*1.5).toFixed(1)});}
@@ -1461,7 +1713,7 @@ function initModel() {
   });
   const tmb = document.getElementById('tbl-model-metrics');
   MODELS.forEach(m=>{
-    tmb.innerHTML+=`<tr><td><strong>${m.name}</strong>${m.best?` <span class="best-badge">TERBAIK</span>`:''}</td><td class="mono" style="color:${m.best?'var(--c-blue)':'var(--txt2)'}">${m.R2.toFixed(3)}</td><td class="mono">${m.MAE.toFixed(3)}</td><td class="mono">${m.RMSE.toFixed(3)}</td><td class="mono">${m.MAPE}%</td><td>${m.best?'<span class="zpill zpill-h">Dipilih</span>':'<span class="tag tag-blue" style="font-size:9px">Kandidat</span>'}</td></tr>`;
+    tmb.innerHTML+=`<tr><td><strong>${m.name}</strong>${m.best?` <span class="best-badge">TERBAIK</span>`:''}</td><td class="mono" style="color:${m.best?'var(--c-blue)':'var(--txt2)'}">${(m.R2||0).toFixed(3)}</td><td class="mono">${(m.MAE||0).toFixed(3)}</td><td class="mono">${(m.RMSE||0).toFixed(3)}</td><td class="mono">${m.MAPE||0}%</td><td>${m.best?'<span class="zpill zpill-h">Dipilih</span>':'<span class="tag tag-blue" style="font-size:9px">Kandidat</span>'}</td></tr>`;
   });
 }
 
@@ -1619,37 +1871,47 @@ function togglePlay() {
 ============================================================ */
 function initForecast() {
   const grid=document.getElementById('fc-week-grid');
-  const weekTotals=Array.from({length:13},(_,i)=>KECAMATAN.reduce((s,k)=>s+FC2026[k.id][i].pred,0));
+  let weekTotals, merahCounts=[], kuningCounts=[], hijauCounts=[];
+  if(window._q1Summary && window._q1Summary.weekly) {
+    weekTotals = window._q1Summary.weekly.map(w=>w.total);
+    window._q1Summary.weekly.forEach(w=>{
+      merahCounts.push(w.merah_ewars||0);
+      kuningCounts.push(w.kuning_ewars||0);
+      hijauCounts.push(w.hijau_ewars||0);
+    });
+  } else {
+    weekTotals=Array.from({length:13},(_,i)=>KECAMATAN.reduce((s,k)=>s+(FC2026[k.id]&&FC2026[k.id][i]?FC2026[k.id][i].pred:0),0));
+    for(let i=0;i<13;i++){
+      merahCounts.push(KECAMATAN.filter(k=>FC2026[k.id]&&FC2026[k.id][i]&&FC2026[k.id][i].ewars==='Merah').length);
+      kuningCounts.push(KECAMATAN.filter(k=>FC2026[k.id]&&FC2026[k.id][i]&&FC2026[k.id][i].ewars==='Kuning').length);
+      hijauCounts.push(KECAMATAN.filter(k=>FC2026[k.id]&&FC2026[k.id][i]&&FC2026[k.id][i].ewars==='Hijau').length);
+    }
+  }
   const maxTotal=Math.max(...weekTotals);
   weekTotals.forEach((total,i)=>{
     const w=i+1;
     const pct=Math.round(total/maxTotal*100);
-    const mCount=KECAMATAN.filter(k=>FC2026[k.id][i].ewars==='Merah').length;
+    const mCount=merahCounts[i];
     const isHot=mCount>=12;
     grid.innerHTML+=`<div class="fc-week${w===6?' active':''}" onclick="selectFcWeek(${w},this)"><div class="fc-wnum">W${w}</div><div class="fc-total" style="color:${isHot?'var(--z-merah)':'var(--c-blue)'}">${Math.round(total)}</div><div class="fc-bar-wrap"><div class="fc-bar" style="width:${pct}%;background:${isHot?'var(--z-merah)':mCount>=8?'var(--z-kuning)':'var(--c-blue)'}"></div></div><div class="fc-zone-row"><div class="fc-zone-dot" style="background:var(--z-merah);width:${Math.max(4,mCount/44*18)}px;height:${Math.max(4,mCount/44*18)}px"></div><div class="fc-zone-dot" style="background:var(--z-kuning)"></div><div class="fc-zone-dot" style="background:var(--z-hijau)"></div></div></div>`;
   });
   mkChart('chartFcBar',{
     type:'bar',
-    data:{labels:Array.from({length:13},(_,i)=>`Minggu ${i+1}`),datasets:[{label:'Total Prediksi Kasus',data:weekTotals.map(v=>Math.round(v)),backgroundColor:weekTotals.map((v,i)=>{const m=KECAMATAN.filter(k=>FC2026[k.id][i].ewars==='Merah').length;return m>=15?'rgba(230,57,70,0.8)':m>=8?'rgba(244,185,66,0.8)':'rgba(46,204,113,0.8)';}),borderWidth:0,borderRadius:4}]},
+    data:{labels:Array.from({length:13},(_,i)=>`Minggu ${i+1}`),datasets:[{label:'Total Prediksi Kasus',data:weekTotals.map(v=>Math.round(v)),backgroundColor:weekTotals.map((v,i)=>{const m=merahCounts[i];return m>=15?'rgba(230,57,70,0.8)':m>=8?'rgba(244,185,66,0.8)':'rgba(46,204,113,0.8)';}),borderWidth:0,borderRadius:4}]},
     options:{scales:{y:{title:{display:true,text:'Total Kasus',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`${l.raw} kasus total`}}}}
   });
-  const mData=[],kData=[],hData=[];
-  for(let i=0;i<13;i++){
-    mData.push(KECAMATAN.filter(k=>FC2026[k.id][i].ewars==='Merah').length);
-    kData.push(KECAMATAN.filter(k=>FC2026[k.id][i].ewars==='Kuning').length);
-    hData.push(KECAMATAN.filter(k=>FC2026[k.id][i].ewars==='Hijau').length);
-  }
   mkChart('chartFcZone',{
     type:'bar',
-    data:{labels:Array.from({length:13},(_,i)=>`W${i+1}`),datasets:[{label:'Merah',data:mData,backgroundColor:'rgba(230,57,70,0.82)',stack:'z',borderWidth:0},{label:'Kuning',data:kData,backgroundColor:'rgba(244,185,66,0.82)',stack:'z',borderWidth:0},{label:'Hijau',data:hData,backgroundColor:'rgba(46,204,113,0.75)',stack:'z',borderWidth:0}]},
+    data:{labels:Array.from({length:13},(_,i)=>`W${i+1}`),datasets:[{label:'Merah',data:merahCounts,backgroundColor:'rgba(230,57,70,0.82)',stack:'z',borderWidth:0},{label:'Kuning',data:kuningCounts,backgroundColor:'rgba(244,185,66,0.82)',stack:'z',borderWidth:0},{label:'Hijau',data:hijauCounts,backgroundColor:'rgba(46,204,113,0.75)',stack:'z',borderWidth:0}]},
     options:{scales:{y:{stacked:true,max:44,title:{display:true,text:'Jumlah Kecamatan',color:'#6fa8d0',font:{size:10}}},x:{stacked:true}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}}}}
   });
   selectFcWeek(6);
   const topKec=KECAMATAN.map(k=>{
-    const total=FC2026[k.id].reduce((s,d)=>s+d.pred,0);
-    const maks=FC2026[k.id].reduce((mx,d)=>d.pred>mx.val?{wk:d.week,val:d.pred,z:d.ewars}:mx,{wk:1,val:0,z:'Hijau'});
+    if(!FC2026[k.id]) return null;
+    const total=FC2026[k.id].reduce((s,d)=>s+(d.pred||0),0);
+    const maks=FC2026[k.id].reduce((mx,d)=>(d.pred||0)>mx.val?{wk:d.week,val:d.pred,z:d.ewars}:mx,{wk:1,val:0,z:'Hijau'});
     return {...k,total,avg:total/13,maks};
-  }).sort((a,b)=>b.total-a.total).slice(0,10);
+  }).filter(k=>k!==null).sort((a,b)=>b.total-a.total).slice(0,10);
   const tt=document.getElementById('tbl-fc-top');
   topKec.forEach((k,i)=>{
     const zCls=k.maks.z==='Merah'?'m':k.maks.z==='Kuning'?'k':'h';
@@ -1664,14 +1926,14 @@ function selectFcWeek(w, el) {
   document.getElementById('fc-detail-sub').textContent=`Detail Prediksi per Kecamatan - Minggu ${w} (Q1 2026)`;
   const tbody=document.getElementById('tbl-fc-detail');
   tbody.innerHTML='';
-  const wData=KECAMATAN.map(k=>({...k,...FC2026[k.id][w-1]})).sort((a,b)=>b.pred-a.pred);
+  const wData=KECAMATAN.filter(k=>FC2026[k.id]&&FC2026[k.id][w-1]).map(k=>({...k,...FC2026[k.id][w-1]})).sort((a,b)=>(b.pred||0)-(a.pred||0));
   wData.forEach((k,i)=>{
-    const vs=((k.pred/k.base-1)*100).toFixed(0);
+    const vs=((k.pred/(k.base||1)-1)*100).toFixed(0);
     const vsC=vs>0?'var(--z-merah)':'var(--z-hijau)';
-    const ze=k.ewars,ec=k.ec;
+    const ze=k.ewars||'Hijau',ec=k.ec||'Hijau';
     const zeCls=ze==='Merah'?'m':ze==='Kuning'?'k':'h';
     const ecCls=ec==='Merah'?'m':ec==='Kuning'?'k':'h';
-    tbody.innerHTML+=`<tr><td>${i+1}</td><td><strong>${k.name}</strong></td><td class="mono" style="color:${ZCOLORS[ze]}">${k.pred.toFixed(2)}</td><td><span class="zpill zpill-${zeCls}"><span class="zdot zdot-${zeCls}"></span>${ze}</span></td><td><span class="zpill zpill-${ecCls}"><span class="zdot zdot-${ecCls}"></span>${ec}</span></td><td style="color:${vsC}">${vs>0?'+':''}${vs}%</td></tr>`;
+    tbody.innerHTML+=`<tr><td>${i+1}</td><td><strong>${k.name}</strong></td><td class="mono" style="color:${ZCOLORS[ze]}">${(k.pred||0).toFixed(2)}</td><td><span class="zpill zpill-${zeCls}"><span class="zdot zdot-${zeCls}"></span>${ze}</span></td><td><span class="zpill zpill-${ecCls}"><span class="zdot zdot-${ecCls}"></span>${ec}</span></td><td style="color:${vsC}">${vs>0?'+':''}${vs}%</td></tr>`;
   });
 }
 
@@ -1864,18 +2126,23 @@ function initBgCanvas() {
 async function loadAllData() {
   const BASE = 'data';
 
-  // Coba load semua file JSON dari folder data/
   const results = await Promise.allSettled([
     fetch(`${BASE}/kecamatan_stats.json`).then(r=>r.ok?r.json():Promise.reject('kec')),
     fetch(`${BASE}/forecast_q1_2026.json`).then(r=>r.ok?r.json():Promise.reject('fc')),
     fetch(`${BASE}/jakarta.geojson`).then(r=>r.ok?r.json():Promise.reject('geo')),
     fetch(`${BASE}/model_metrics.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/feature_importance.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/historis_weekly.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/q1_2026_summary.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/cv_fold_results.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/eda_stats.json`).then(r=>r.ok?r.json():null).catch(()=>null),
   ]);
 
-  const [kecRes, fcRes, geoRes, mdlRes] = results;
+  const [kecRes, fcRes, geoRes, mdlRes, shapRes, histRes, q1Res, foldRes, edaRes] = results;
 
   if(kecRes.status === 'fulfilled') {
     KECAMATAN = kecRes.value;
+    console.log('[SIPEDA] Loaded kecamatan_stats.json:', KECAMATAN.length, 'kecamatan');
   } else {
     console.warn('[SIPEDA] Gagal memuat kecamatan_stats.json – pakai data demo');
     KECAMATAN = KECAMATAN_DEMO;
@@ -1883,9 +2150,9 @@ async function loadAllData() {
 
   if(fcRes.status === 'fulfilled') {
     FC2026 = fcRes.value;
+    console.log('[SIPEDA] Loaded forecast_q1_2026.json');
   } else {
     console.warn('[SIPEDA] Gagal memuat forecast_q1_2026.json – hitung ulang dari formula');
-    // Hitung ulang FC2026 dari formula (fallback)
     KECAMATAN.forEach(kec=>{
       FC2026[kec.id]=[];
       for(let w=1;w<=13;w++){
@@ -1897,21 +2164,58 @@ async function loadAllData() {
 
   if(geoRes.status === 'fulfilled') {
     geoJsonData = geoRes.value;
+    console.log('[SIPEDA] Loaded jakarta.geojson');
   } else {
     console.warn('[SIPEDA] Gagal memuat jakarta.geojson – peta pakai fallback circle');
   }
 
-  // Opsional: model metrics
   if(mdlRes.status === 'fulfilled' && mdlRes.value) {
-    // Bisa digunakan untuk memperbarui tabel model di halaman Model
     window._modelMetrics = mdlRes.value;
+    MODELS.length = 0;
+    mdlRes.value.forEach(m => {
+      MODELS.push({
+        name: m.name,
+        key: m.key,
+        R2: m.R2,
+        MAE: m.MAE,
+        RMSE: m.RMSE,
+        MAPE: m.MAPE,
+        best: m.best
+      });
+    });
+    console.log('[SIPEDA] Loaded model_metrics.json');
   }
 
-  // Build KEC_MAP
+  if(shapRes.status === 'fulfilled' && shapRes.value) {
+    window._featureImportance = shapRes.value;
+    SHAP_FEATS.length = 0;
+    shapRes.value.forEach(f => SHAP_FEATS.push({name: f.name, val: f.val}));
+    console.log('[SIPEDA] Loaded feature_importance.json');
+  }
+
+  if(histRes.status === 'fulfilled' && histRes.value) {
+    window._historisWeekly = histRes.value;
+    console.log('[SIPEDA] Loaded historis_weekly.json');
+  }
+
+  if(q1Res.status === 'fulfilled' && q1Res.value) {
+    window._q1Summary = q1Res.value;
+    console.log('[SIPEDA] Loaded q1_2026_summary.json');
+  }
+
+  if(foldRes.status === 'fulfilled' && foldRes.value) {
+    window._cvFoldResults = foldRes.value;
+    console.log('[SIPEDA] Loaded cv_fold_results.json');
+  }
+
+  if(edaRes.status === 'fulfilled' && edaRes.value) {
+    window._edaStats = edaRes.value;
+    console.log('[SIPEDA] Loaded eda_stats.json');
+  }
+
   KEC_MAP = {};
   KECAMATAN.forEach(k => KEC_MAP[k.id] = k);
 
-  // Hitung FC2026 dari formula jika masih kosong untuk kecamatan yang hilang
   KECAMATAN.forEach(kec=>{
     if(!FC2026[kec.id]) {
       FC2026[kec.id]=[];
