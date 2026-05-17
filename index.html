@@ -340,7 +340,10 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bor
 /* CHART HEIGHTS */
 .ch-200{height:220px;position:relative;}.ch-260{height:260px;position:relative;}
 .ch-280{height:280px;position:relative;}.ch-320{height:320px;position:relative;}
-.ch-360{height:360px;position:relative;}
+.ch-360{height:360px;position:relative;}.ch-480{height:480px;position:relative;}
+.ch-fill{flex:1;min-height:300px;position:relative;}
+.card-flex-col{display:flex;flex-direction:column;}
+.card-flex-col .ch-fill{flex:1;}
 canvas{max-width:100%;}
 
 /* ANIMATIONS */
@@ -999,10 +1002,10 @@ canvas{max-width:100%;}
   </div>
   <div class="sec-head mb16"><div class="sec-title"><div class="sec-title-line" style="background:var(--c-teal)"></div>Pentingnya Fitur - SHAP Values</div></div>
   <div class="g-7-3 mb24">
-    <div class="card">
+    <div class="card card-flex-col" style="min-height:520px">
       <div class="card-title">Top 15 Fitur Berpengaruh (Mean SHAP absolut)</div>
       <div class="card-subtitle">Lag kasus 1-2 minggu mendominasi, diikuti fitur iklim. Fitur spasial tetangga dan siklus musiman juga berkontribusi signifikan.</div>
-      <div class="ch-360"><canvas id="chartSHAP"></canvas></div>
+      <div class="ch-fill" style="min-height:440px"><canvas id="chartSHAP"></canvas></div>
     </div>
     <div class="card">
       <div class="card-title">Interpretasi SHAP</div>
@@ -1012,7 +1015,12 @@ canvas{max-width:100%;}
   </div>
   <div class="card mb24">
     <div class="card-title">Prediksi vs Aktual - Fold Terakhir (2025)</div>
-    <div class="card-subtitle" id="scatter-subtitle">Titik-titik ideal berada di garis diagonal. LightGBM menunjukkan distribusi paling konsisten tanpa bias sistematik.</div>
+    <div id="scatter-subtitle" class="card-subtitle">Titik-titik ideal berada di garis diagonal. LightGBM menunjukkan distribusi paling konsisten tanpa bias sistematik.</div>
+    <div class="ctrl-row" style="margin-bottom:10px">
+      <span class="ctrl-label">Tampilkan Model:</span>
+      <select class="ctrl-sel" id="scatter-model-sel" onchange="onScatterModelChange(this.value)"></select>
+      <span class="ctrl-badge" id="scatter-n-pts">— titik</span>
+    </div>
     <div class="ch-320"><canvas id="chartScatter"></canvas></div>
   </div>
   <div class="sec-head mb16"><div class="sec-title"><div class="sec-title-line" style="background:var(--c-amber)"></div>Tabel Metrik Lengkap</div></div>
@@ -1755,16 +1763,35 @@ function initEDA() {
   });
   mkChart('chartCorr',{
     type:'bar',
-    data:{labels:SHAP_FEATS.map(f=>f.name),datasets:[{label:'Spearman absolut',data:SHAP_FEATS.map(f=>+(f.val*0.9+0.05).toFixed(3)),backgroundColor:SHAP_FEATS.map((_,i)=>`hsla(${200+i*8},80%,60%,0.75)`),borderWidth:0}]},
+    data:{
+      labels: window._spearmanCorr ? window._spearmanCorr.map(f=>f.name) : SHAP_FEATS.map(f=>f.name),
+      datasets:[{
+        label:'Spearman absolut',
+        data: window._spearmanCorr ? window._spearmanCorr.map(f=>+(f.spearman||f.val||0).toFixed(3)) : SHAP_FEATS.map(f=>+(f.val*0.9+0.05).toFixed(3)),
+        backgroundColor: (window._spearmanCorr||SHAP_FEATS).map((_,i)=>`hsla(${200+i*8},80%,60%,0.75)`),
+        borderWidth:0
+      }]
+    },
     options:{indexAxis:'y',scales:{x:{max:1,title:{display:true,text:'Koefisien Spearman absolut',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false}}}
   });
-  const sorted=[...KECAMATAN].filter(k=>k.kab!=='Kepulauan Seribu').sort((a,b)=>b.base-a.base).slice(0,10);
+  const sorted=[...KECAMATAN].filter(k=>k.kab!=='Kepulauan Seribu').sort((a,b)=>{
+    if(window._kecamatanAnnual) {
+      const aT = window._kecamatanAnnual[a.id]?.total || a.base*52*9*0.85;
+      const bT = window._kecamatanAnnual[b.id]?.total || b.base*52*9*0.85;
+      return bT - aT;
+    }
+    return b.base-a.base;
+  }).slice(0,10);
   const tbody = document.getElementById('tbl-top-kec');
   sorted.forEach((k,i)=>{
-    const total=Math.round(k.base*52*9*0.85);
+    const ann = window._kecamatanAnnual ? window._kecamatanAnnual[k.id] : null;
+    const total = ann ? Math.round(ann.total) : Math.round(k.base*52*9*0.85);
+    const avgWeek = ann ? ann.avg_per_week.toFixed(2) : k.base.toFixed(2);
+    const peakVal = ann ? Math.round(ann.peak_cases) : Math.round(k.base*1.9);
+    const peakYr = ann ? ann.peak_year : '—';
     const tc=k.base>3.5?'var(--z-merah)':k.base<2.5?'var(--z-hijau)':'var(--z-kuning)';
     const tren=k.base>3.5?'Naik':k.base<2.5?'Turun':'Stabil';
-    tbody.innerHTML+=`<tr><td>${i+1}</td><td><strong>${k.name}</strong></td><td>${k.kab}</td><td class="mono" style="color:var(--z-merah)">${total.toLocaleString()}</td><td class="mono">${k.base.toFixed(2)}</td><td class="mono">${Math.round(k.base*1.9)}</td><td style="color:${tc}">${tren}</td></tr>`;
+    tbody.innerHTML+=`<tr><td>${i+1}</td><td><strong>${k.name}</strong></td><td>${k.kab}</td><td class="mono" style="color:var(--z-merah)">${total.toLocaleString()}</td><td class="mono">${avgWeek}</td><td class="mono">${peakVal} <span style="color:var(--txt3);font-size:10px">(${peakYr})</span></td><td style="color:${tc}">${tren}</td></tr>`;
   });
 }
 
@@ -1833,33 +1860,69 @@ function initModel() {
       <div style="font-size:11.5px;color:var(--txt2);line-height:1.6;padding-left:2px">${explanation}</div>
     </div>`;
   });
-  const scatterData=[];
-  // Gunakan data dari file JSON jika tersedia, jika tidak generate data simulasi berdasarkan model
-  if(window._scatterData && window._scatterData.lightgbm) {
-    window._scatterData.lightgbm.forEach(pt => scatterData.push({x: pt.actual, y: pt.predicted}));
-    const sub = document.getElementById('scatter-subtitle');
-    if(sub) sub.textContent = 'Data aktual vs prediksi LightGBM fold terakhir (2025). Titik di garis diagonal = prediksi sempurna. Diambil dari scatter_data.json.';
-  } else {
-    // Generate scatter data berdasarkan performa model LightGBM (R²=0.76, MAE=1.78)
-    // Data representatif - untuk data nyata ekspor scatter_data.json dari Colab
-    for(let i=0;i<180;i++){
-      const actual=Math.max(0,Math.random()*12);
-      // Simulasi prediksi dengan noise sesuai performa model
-      const noise = (Math.random()-0.5) * 3.0; // MAE ~1.78
-      const predicted = Math.max(0, actual * 0.92 + 0.3 + noise);
-      scatterData.push({x:+(actual).toFixed(2),y:+(predicted).toFixed(2)});
-    }
-    const sub = document.getElementById('scatter-subtitle');
-    if(sub) sub.innerHTML = 'Titik-titik ideal berada di garis diagonal. <em style="color:var(--c-amber)">Data representatif (simulasi berdasarkan R²=0.76, MAE=1.78) — tambahkan scatter_data.json dari Colab untuk data nyata.</em>';
+  const scatterSel = document.getElementById('scatter-model-sel');
+  if(scatterSel) {
+    MODELS.forEach(m=>{
+      const opt = document.createElement('option');
+      opt.value = m.key;
+      opt.textContent = m.name + (m.best ? ' ★ Terbaik' : '');
+      scatterSel.appendChild(opt);
+    });
+    // default ke model terbaik
+    const bestKey = (MODELS.find(m=>m.best)||MODELS[0]).key;
+    scatterSel.value = bestKey;
   }
-  mkChart('chartScatter',{
-    type:'scatter',
-    data:{datasets:[{label:'LightGBM',data:scatterData,backgroundColor:C.blue+'0.4)',pointRadius:4},{label:'Garis Sempurna',data:[{x:0,y:0},{x:15,y:15}],type:'line',borderColor:C.red+'0.7)',borderDash:[4,3],pointRadius:0,borderWidth:1.5}]},
-    options:{scales:{x:{title:{display:true,text:'Aktual (kasus per minggu per kec)',color:'#6fa8d0',font:{size:10}},max:16},y:{title:{display:true,text:'Prediksi (kasus per minggu per kec)',color:'#6fa8d0',font:{size:10}},max:16}},plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
-  });
+  renderScatterChart((MODELS.find(m=>m.best)||MODELS[0]).key);
+  // Tabel metrik model
   const tmb = document.getElementById('tbl-model-metrics');
   MODELS.forEach(m=>{
     tmb.innerHTML+=`<tr><td><strong>${m.name}</strong>${m.best?` <span class="best-badge">TERBAIK</span>`:''}</td><td class="mono" style="color:${m.best?'var(--c-blue)':'var(--txt2)'}">${(m.R2||0).toFixed(3)}</td><td class="mono">${(m.MAE||0).toFixed(3)}</td><td class="mono">${(m.RMSE||0).toFixed(3)}</td><td class="mono">${m.MAPE||0}%</td><td>${m.best?'<span class="zpill zpill-h">Dipilih</span>':'<span class="tag tag-blue" style="font-size:9px">Kandidat</span>'}</td></tr>`;
+  });
+}
+
+function onScatterModelChange(modelKey) {
+  renderScatterChart(modelKey);
+}
+
+function renderScatterChart(modelKey) {
+  const m = MODELS.find(m=>m.key===modelKey) || MODELS[0];
+  const scatterData = [];
+  const nEl = document.getElementById('scatter-n-pts');
+  const subEl = document.getElementById('scatter-subtitle');
+
+  if(window._scatterData && window._scatterData[modelKey]) {
+    window._scatterData[modelKey].forEach(pt=>scatterData.push({x:pt.actual,y:pt.predicted}));
+    if(subEl) subEl.textContent = `Aktual vs prediksi ${m.name} – fold terakhir (2025). Data dari scatter_data.json.`;
+    if(nEl) nEl.textContent = `${scatterData.length} titik`;
+  } else if(window._scatterData && Object.keys(window._scatterData).length > 0) {
+    // coba key pertama yg ada
+    const firstKey = Object.keys(window._scatterData)[0];
+    window._scatterData[firstKey].forEach(pt=>scatterData.push({x:pt.actual,y:pt.predicted}));
+    if(subEl) subEl.textContent = `Data scatter untuk "${modelKey}" tidak tersedia. Menampilkan "${firstKey}".`;
+    if(nEl) nEl.textContent = `${scatterData.length} titik`;
+  } else {
+    for(let i=0;i<180;i++){
+      const actual=Math.max(0,Math.random()*12);
+      const noise=(Math.random()-0.5)*3.0*(1+(1-(m.R2||0.5)));
+      scatterData.push({x:+(actual).toFixed(2),y:+Math.max(0,actual*0.92+0.3+noise).toFixed(2)});
+    }
+    if(subEl) subEl.innerHTML=`Titik-titik ideal berada di garis diagonal. <em style="color:var(--c-amber)">Data representatif (R²≈${(m.R2||0).toFixed(2)}) — tambahkan scatter_data.json untuk data nyata.</em>`;
+    if(nEl) nEl.textContent = `${scatterData.length} titik (simulasi)`;
+  }
+  const colorPalette=['rgba(0,170,255,','rgba(0,210,200,','rgba(244,185,66,','rgba(46,204,113,','rgba(139,92,246,'];
+  const mIdx = MODELS.findIndex(x=>x.key===modelKey);
+  const col = colorPalette[mIdx<0?0:mIdx%5];
+  const maxVal = scatterData.length>0 ? Math.max(...scatterData.map(p=>Math.max(p.x,p.y)))*1.1 : 16;
+  mkChart('chartScatter',{
+    type:'scatter',
+    data:{datasets:[
+      {label:m.name,data:scatterData,backgroundColor:col+'0.4)',pointRadius:4,pointHoverRadius:6},
+      {label:'Garis Sempurna',data:[{x:0,y:0},{x:maxVal,y:maxVal}],type:'line',borderColor:'rgba(230,57,70,0.7)',borderDash:[4,3],pointRadius:0,borderWidth:1.5}
+    ]},
+    options:{scales:{
+      x:{title:{display:true,text:'Aktual (kasus per minggu per kec)',color:'#6fa8d0',font:{size:10}},max:maxVal},
+      y:{title:{display:true,text:'Prediksi (kasus per minggu per kec)',color:'#6fa8d0',font:{size:10}},max:maxVal}
+    },plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
   });
 }
 
@@ -2325,9 +2388,11 @@ async function loadAllData() {
     fetch(`${BASE}/cv_fold_results.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/eda_stats.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/scatter_data.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/spearman_corr.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/kecamatan_annual.json`).then(r=>r.ok?r.json():null).catch(()=>null),
   ]);
 
-  const [kecRes, fcRes, geoRes, mdlRes, shapRes, histRes, q1Res, foldRes, edaRes, scatterRes] = results;
+  const [kecRes, fcRes, geoRes, mdlRes, shapRes, histRes, q1Res, foldRes, edaRes, scatterRes, spearmanRes, kecAnnualRes] = results;
 
   if(kecRes.status === 'fulfilled') {
     KECAMATAN = kecRes.value;
@@ -2405,6 +2470,16 @@ async function loadAllData() {
   if(scatterRes.status === 'fulfilled' && scatterRes.value) {
     window._scatterData = scatterRes.value;
     console.log('[SIPEDA] Loaded scatter_data.json');
+  }
+
+  if(spearmanRes.status === 'fulfilled' && spearmanRes.value) {
+    window._spearmanCorr = spearmanRes.value;
+    console.log('[SIPEDA] Loaded spearman_corr.json');
+  }
+
+  if(kecAnnualRes.status === 'fulfilled' && kecAnnualRes.value) {
+    window._kecamatanAnnual = kecAnnualRes.value;
+    console.log('[SIPEDA] Loaded kecamatan_annual.json');
   }
 
   KEC_MAP = {};
