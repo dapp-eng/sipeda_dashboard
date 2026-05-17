@@ -1698,18 +1698,26 @@ function initEDA() {
   }
   
   // Histogram data - gunakan dari JSON jika ada
+  // Struktur JSON: eda_stats.kasus_dbd.histogram (bukan top-level)
   let hbins, hvals;
-  if(window._edaStats && window._edaStats.histogram) {
-    hbins = window._edaStats.histogram.bins;
-    hvals = window._edaStats.histogram.counts;
+  const _hist = window._edaStats?.kasus_dbd?.histogram ?? window._edaStats?.histogram;
+  if(_hist && _hist.bins && _hist.counts) {
+    hbins = _hist.bins;
+    hvals = _hist.counts;
   } else {
-    hbins=[0,1,2,3,4,5,6,7,8,10,15,20,30,50];
-    hvals=[3200,2800,2200,1800,1400,1100,800,600,700,480,260,120,40];
+    hbins=[0,1,2,3,4,5,6,7,8,10,15,20,30,50,999];
+    hvals=[3200,2800,2200,1800,1400,1100,800,600,700,480,260,120,40,8];
   }
+  // Buat label bin histogram — bin terakhir (>=999) ditampilkan sebagai ">50"
+  const histLabels = hbins.slice(0, hvals.length).map((v, i) => {
+    const next = hbins[i + 1];
+    if(next === undefined || next >= 999) return `>${v}`;
+    return `${v}\u2013${next}`;
+  });
   mkChart('chartHist',{
     type:'bar',
-    data:{labels:hbins.slice(0,-1).map((v,i)=>`${v}-${hbins[i+1]}`),datasets:[{label:'Frekuensi',data:hvals,backgroundColor:C.blue+'0.7)',borderColor:C.blue+'1)',borderWidth:1}]},
-    options:{scales:{x:{title:{display:true,text:'kasus DBD per kecamatan per minggu',color:'#6fa8d0',font:{size:10}}},y:{title:{display:true,text:'Frekuensi',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false}}}
+    data:{labels:histLabels,datasets:[{label:'Frekuensi',data:hvals,backgroundColor:C.blue+'0.7)',borderColor:C.blue+'1)',borderWidth:1}]},
+    options:{scales:{x:{title:{display:true,text:'Kasus DBD per kecamatan per minggu',color:'#6fa8d0',font:{size:10}},ticks:{font:{size:9},maxRotation:45}},y:{title:{display:true,text:'Frekuensi (observasi)',color:'#6fa8d0',font:{size:10}},beginAtZero:true}},plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`Frekuensi: ${l.raw.toLocaleString('id')}`}}}}
   });
   const years=[2017,2018,2019,2020,2021,2022,2023,2024,2025];
   const allWeeks=[],allVals=[];
