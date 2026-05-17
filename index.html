@@ -882,28 +882,28 @@ canvas{max-width:100%;}
     <div class="card pulse-card">
       <div class="card-top" style="background:linear-gradient(90deg,var(--c-red),#ff6b6b)"></div>
       <div class="card-label">Total Prediksi Kasus Q1</div>
-      <div class="card-value mono" style="color:var(--z-merah)" data-counter="2247">2.247</div>
+      <div class="card-value mono" style="color:var(--z-merah)" data-counter="2247" id="kpi-total-val">2.247</div>
       <div class="card-sub">Seluruh 44 kecamatan · Minggu 1-13 tahun 2026</div>
       <div class="card-trend"><span style="color:var(--c-amber)">▲</span><span style="color:var(--txt3)">+15% vs rata-rata Q1 historis</span></div>
     </div>
     <div class="card">
       <div class="card-top" style="background:linear-gradient(90deg,var(--z-merah),var(--z-kuning))"></div>
       <div class="card-label">Puncak Kecamatan Merah</div>
-      <div class="card-value mono" style="color:var(--z-kuning)">18</div>
-      <div class="card-sub">Kecamatan zona Merah di puncak pada Minggu 6</div>
-      <div class="card-trend"><span style="color:var(--txt3)">dari 44 kecamatan total (40.9%)</span></div>
+      <div class="card-value mono" style="color:var(--z-kuning)" id="kpi-merah-val">18</div>
+      <div class="card-sub" id="kpi-merah-sub">Kecamatan zona Merah di puncak pada Minggu 6</div>
+      <div class="card-trend"><span style="color:var(--txt3)" id="kpi-merah-trend">dari 44 kecamatan total (40.9%)</span></div>
     </div>
     <div class="card">
       <div class="card-top" style="background:linear-gradient(90deg,var(--c-blue),var(--c-teal))"></div>
       <div class="card-label">Model Terbaik R2</div>
-      <div class="card-value mono" style="color:var(--c-blue)">0.76</div>
-      <div class="card-sub">LightGBM Tweedie · MAE = 1.78 kasus/minggu</div>
+      <div class="card-value mono" style="color:var(--c-blue)" id="kpi-r2-val">0.76</div>
+      <div class="card-sub" id="kpi-r2-sub">LightGBM Tweedie · MAE = 1.78 kasus/minggu</div>
       <div class="card-trend"><span style="color:var(--c-green)">▲</span><span style="color:var(--txt3)">Terbaik dari 5 model kandidat</span></div>
     </div>
     <div class="card">
       <div class="card-top" style="background:linear-gradient(90deg,var(--c-teal),var(--c-purple))"></div>
       <div class="card-label">Fitur Utama SHAP</div>
-      <div class="card-value" style="font-size:14px;font-family:'JetBrains Mono',monospace;color:var(--c-teal);letter-spacing:-0.5px">kasus lag1</div>
+      <div class="card-value" style="font-size:14px;font-family:'JetBrains Mono',monospace;color:var(--c-teal);letter-spacing:-0.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="kpi-shap-val">kasus lag1</div>
       <div class="card-sub">Lag 1 minggu kasus merupakan prediktor terkuat</div>
       <div class="card-trend"><span style="color:var(--txt3)">diikuti curah hujan lag1 dan suhu rata</span></div>
     </div>
@@ -930,7 +930,7 @@ canvas{max-width:100%;}
         <tr><td>Mean</td><td id="stat-mean">3.18</td></tr><tr><td>Median</td><td id="stat-median">1.00</td></tr>
         <tr><td>Std Dev</td><td id="stat-std">4.92</td></tr><tr><td>Skewness</td><td id="stat-skew" style="color:var(--c-amber)">3.42</td></tr>
         <tr><td>Kurtosis</td><td id="stat-kurt" style="color:var(--c-amber)">17.8</td></tr><tr><td>Min / Maks</td><td id="stat-minmax">0 / 68</td></tr>
-        <tr><td>Persentase data = 0</td><td id="stat-zero">28.4%</td></tr><tr><td>Persentase data lebih dari 10</td><td id="stat-gt10">14.2%</td></tr>
+        <tr><td>Persentase data = 0</td><td id="stat-zero">28.4%</td></tr><tr><td>Persentase data lebih dari 30</td><td id="stat-gt10">14.2%</td></tr>
       </table>
       <div class="info-box" style="margin-top:12px;margin-bottom:0;padding:10px 12px;">
         <div class="info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M9 3h6m-5 0v6l-5 9a1 1 0 0 0 .9 1.5h10.2A1 1 0 0 0 21 18l-5-9V3"/><path d="M6 17h12"/></svg></div>
@@ -1012,7 +1012,7 @@ canvas{max-width:100%;}
   </div>
   <div class="card mb24">
     <div class="card-title">Prediksi vs Aktual - Fold Terakhir (2025)</div>
-    <div class="card-subtitle">Titik-titik ideal berada di garis diagonal. LightGBM menunjukkan distribusi paling konsisten tanpa bias sistematik.</div>
+    <div class="card-subtitle" id="scatter-subtitle">Titik-titik ideal berada di garis diagonal. LightGBM menunjukkan distribusi paling konsisten tanpa bias sistematik.</div>
     <div class="ch-320"><canvas id="chartScatter"></canvas></div>
   </div>
   <div class="sec-head mb16"><div class="sec-title"><div class="sec-title-line" style="background:var(--c-amber)"></div>Tabel Metrik Lengkap</div></div>
@@ -1610,11 +1610,48 @@ const C = {blue:'rgba(0,170,255,',teal:'rgba(0,210,200,',red:'rgba(230,57,70,',a
 ============================================================ */
 function initBeranda() {
   animateCounters();
+  // Update KPI cards dari data JSON yang sudah di-load
+  if(window._q1Summary) {
+    const q = window._q1Summary;
+    // Total kasus Q1
+    const totalEl = document.querySelector('[data-counter="2247"]');
+    if(totalEl) { totalEl.setAttribute('data-counter', Math.round(q.total_kasus)); totalEl.textContent = Math.round(q.total_kasus).toLocaleString('id'); }
+    // Puncak kecamatan merah
+    const peakMerah = q.weekly ? Math.max(...q.weekly.map(w=>w.merah_ewars||0)) : 18;
+    const peakWeek = q.weekly ? (q.weekly.findIndex(w=>(w.merah_ewars||0)===peakMerah)+1) : 6;
+    const merahValEl = document.getElementById('kpi-merah-val');
+    if(merahValEl) merahValEl.textContent = peakMerah;
+    const merahSubEl = document.getElementById('kpi-merah-sub');
+    if(merahSubEl) merahSubEl.textContent = `Kecamatan zona Merah di puncak pada Minggu ${peakWeek}`;
+    const merahTrendEl = document.getElementById('kpi-merah-trend');
+    if(merahTrendEl) merahTrendEl.textContent = `dari 44 kecamatan total (${(peakMerah/44*100).toFixed(1)}%)`;
+  }
+  if(MODELS && MODELS.length) {
+    const best = MODELS.find(m=>m.best) || MODELS[0];
+    const r2El = document.getElementById('kpi-r2-val');
+    if(r2El) r2El.textContent = (best.R2||0).toFixed(2);
+    const r2SubEl = document.getElementById('kpi-r2-sub');
+    if(r2SubEl) r2SubEl.textContent = `${best.name} · MAE = ${(best.MAE||0).toFixed(2)} kasus/minggu`;
+    // Update hero hstat R²
+    const hstatR2 = document.querySelector('.hstat-val:not([data-counter])');
+    if(hstatR2) hstatR2.textContent = (best.R2||0).toFixed(2);
+  }
+  if(SHAP_FEATS && SHAP_FEATS.length) {
+    const top = SHAP_FEATS[0];
+    const shapEl = document.getElementById('kpi-shap-val');
+    if(shapEl) { shapEl.textContent = top.name; shapEl.title = top.name; }
+  }
+  // Donut chart - gunakan data q1Summary jika ada
+  let donutData = [18, 12, 14];
+  if(window._q1Summary && window._q1Summary.zona_ewars) {
+    const z = window._q1Summary.zona_ewars;
+    donutData = [z.Merah||0, z.Kuning||0, z.Hijau||0];
+  }
   mkChart('heroDonut',{
     type:'doughnut',
     data:{
       labels:['Merah (lebih dari P75)','Kuning (P50 sampai P75)','Hijau (maksimal P50)'],
-      datasets:[{data:[18,12,14],backgroundColor:['rgba(230,57,70,0.85)','rgba(244,185,66,0.85)','rgba(46,204,113,0.85)'],borderWidth:0,hoverOffset:6}]
+      datasets:[{data:donutData,backgroundColor:['rgba(230,57,70,0.85)','rgba(244,185,66,0.85)','rgba(46,204,113,0.85)'],borderWidth:0,hoverOffset:6}]
     },
     options:{cutout:'68%',plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},padding:8}},tooltip:{callbacks:{label:l=>` ${l.label}: ${l.raw} kecamatan`}}}}
   });
@@ -1638,15 +1675,18 @@ function animateCounters() {
 function initEDA() {
   // Update statistik deskriptif dari data JSON jika tersedia
   if(window._edaStats) {
-    const s = window._edaStats;
-    if(s.mean) document.getElementById('stat-mean').textContent = s.mean.toFixed(2);
-    if(s.median) document.getElementById('stat-median').textContent = s.median.toFixed(2);
-    if(s.std) document.getElementById('stat-std').textContent = s.std.toFixed(2);
-    if(s.skewness) document.getElementById('stat-skew').textContent = s.skewness.toFixed(2);
-    if(s.kurtosis) document.getElementById('stat-kurt').textContent = s.kurtosis.toFixed(1);
+    // Data statistik ada di sub-objek kasus_dbd
+    const s = window._edaStats.kasus_dbd || window._edaStats;
+    if(s.mean !== undefined) document.getElementById('stat-mean').textContent = s.mean.toFixed(2);
+    if(s.median !== undefined) document.getElementById('stat-median').textContent = s.median.toFixed(2);
+    if(s.std !== undefined) document.getElementById('stat-std').textContent = s.std.toFixed(2);
+    if(s.skewness !== undefined) document.getElementById('stat-skew').textContent = s.skewness.toFixed(2);
+    if(s.kurtosis !== undefined) document.getElementById('stat-kurt').textContent = s.kurtosis.toFixed(1);
     if(s.min !== undefined && s.max !== undefined) document.getElementById('stat-minmax').textContent = `${s.min} / ${s.max}`;
-    if(s.pct_zero) document.getElementById('stat-zero').textContent = s.pct_zero.toFixed(1) + '%';
-    if(s.pct_gt10) document.getElementById('stat-gt10').textContent = s.pct_gt10.toFixed(1) + '%';
+    if(s.pct_zero !== undefined) document.getElementById('stat-zero').textContent = s.pct_zero.toFixed(1) + '%';
+    // Python mengexport pct_gt_30 (kasus > 30), sesuaikan field name
+    const gt = s.pct_gt_30 ?? s.pct_gt10;
+    if(gt !== undefined) document.getElementById('stat-gt10').textContent = gt.toFixed(1) + '%';
   }
   
   // Histogram data - gunakan dari JSON jika ada
@@ -1681,15 +1721,36 @@ function initEDA() {
     options:{scales:{x:{ticks:{maxTicksLimit:13,font:{size:10}}},y:{title:{display:true,text:'Total Kasus per Minggu',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12,padding:6}}},interaction:{mode:'index',intersect:false}}
   });
   const kabs=['Jakarta Timur','Jakarta Selatan','Jakarta Utara','Jakarta Barat','Jakarta Pusat','Kepulauan Seribu'];
-  const kabMeans=[4.2,3.8,3.4,3.1,2.8,0.4];
+  let kabMeans=[4.2,3.8,3.4,3.1,2.8,0.4];
+  // Gunakan data kabupaten_stats dari JSON jika tersedia
+  if(window._edaStats && window._edaStats.kabupaten_stats) {
+    const ks = window._edaStats.kabupaten_stats;
+    const orderedKabs = kabs.filter(k=>ks[k]);
+    if(orderedKabs.length > 0) {
+      const sorted = Object.entries(ks).sort((a,b)=>b[1].mean-a[1].mean);
+      kabs.length = 0; kabMeans.length = 0;
+      sorted.forEach(([k,v])=>{ kabs.push(k); kabMeans.push(+(v.mean||0).toFixed(2)); });
+    }
+  }
   mkChart('chartKab',{
     type:'bar',
     data:{labels:kabs,datasets:[{label:'Rata-rata kasus per minggu per kecamatan',data:kabMeans,backgroundColor:[C.red+'0.75)',C.amber+'0.75)',C.blue+'0.75)',C.teal+'0.75)',C.green+'0.75)',C.purple+'0.75)'],borderWidth:0}]},
     options:{indexAxis:'y',scales:{x:{title:{display:true,text:'Rata-rata Kasus',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false}}}
   });
+  // Data kuartal - gunakan dari JSON jika tersedia
+  let kuartalMean=[4.8,2.9,1.6,2.8], kuartalMedian=[3.2,1.9,1.1,1.9];
+  if(window._edaStats && window._edaStats.kuartal_stats) {
+    const qs = window._edaStats.kuartal_stats;
+    // key: 1,2,3,4 atau 'Q1' dsb - normalize
+    const qKeys = Object.keys(qs).sort();
+    if(qKeys.length >= 4) {
+      kuartalMean = qKeys.map(k=>+(qs[k].mean||0).toFixed(2));
+      kuartalMedian = qKeys.map(k=>+(qs[k].median||0).toFixed(2));
+    }
+  }
   mkChart('chartKuartal',{
     type:'bar',
-    data:{labels:['Q1 Jan-Mar','Q2 Apr-Jun','Q3 Jul-Sep','Q4 Okt-Des'],datasets:[{label:'Mean',data:[4.8,2.9,1.6,2.8],backgroundColor:[C.red+'0.8)',C.amber+'0.7)',C.green+'0.7)',C.blue+'0.7)'],borderWidth:0},{label:'Median',data:[3.2,1.9,1.1,1.9],backgroundColor:[C.red+'0.4)',C.amber+'0.4)',C.green+'0.4)',C.blue+'0.4)'],borderWidth:0}]},
+    data:{labels:['Q1 Jan-Mar','Q2 Apr-Jun','Q3 Jul-Sep','Q4 Okt-Des'],datasets:[{label:'Mean',data:kuartalMean,backgroundColor:[C.red+'0.8)',C.amber+'0.7)',C.green+'0.7)',C.blue+'0.7)'],borderWidth:0},{label:'Median',data:kuartalMedian,backgroundColor:[C.red+'0.4)',C.amber+'0.4)',C.green+'0.4)',C.blue+'0.4)'],borderWidth:0}]},
     options:{scales:{y:{title:{display:true,text:'Kasus per Minggu',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
   });
   mkChart('chartCorr',{
@@ -1735,11 +1796,12 @@ function initModel() {
     options:{indexAxis:'y',scales:{x:{max:1,title:{display:true,text:'Mean nilai SHAP absolut',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false}}}
   });
   const se = document.getElementById('shap-explain');
+  if(se) se.innerHTML = '';
   // Penjelasan interpretasi untuk setiap fitur SHAP
   const shapExplanations = {
-    'kasus DBD lag1': 'Jumlah kasus DBD 1 minggu sebelumnya merupakan prediktor terkuat. Ini menunjukkan persistensi wabah dan pola transmisi virus dengue yang berkelanjutan.',
-    'kasus DBD lag2': 'Kasus 2 minggu sebelumnya masih berpengaruh signifikan, mencerminkan siklus hidup nyamuk Aedes aegypti (8-12 hari) dari telur hingga dewasa infektif.',
-    'kasus DBD rolling4': 'Rata-rata 4 minggu terakhir menangkap tren jangka menengah dan membantu meredam fluktuasi mingguan yang ekstrem.',
+    'kasus dbd lag1': 'Jumlah kasus DBD 1 minggu sebelumnya merupakan prediktor terkuat. Ini menunjukkan persistensi wabah dan pola transmisi virus dengue yang berkelanjutan.',
+    'kasus dbd lag2': 'Kasus 2 minggu sebelumnya masih berpengaruh signifikan, mencerminkan siklus hidup nyamuk Aedes aegypti (8-12 hari) dari telur hingga dewasa infektif.',
+    'kasus dbd rolling4': 'Rata-rata 4 minggu terakhir menangkap tren jangka menengah dan membantu meredam fluktuasi mingguan yang ekstrem.',
     'curah hujan lag1': 'Curah hujan minggu sebelumnya meningkatkan habitat perkembangbiakan nyamuk. Genangan air hujan menjadi tempat ideal untuk bertelur.',
     'suhu rata': 'Suhu optimal 25-30°C mempercepat siklus hidup nyamuk dan replikasi virus dengue dalam tubuh nyamuk.',
     'minggu sin': 'Komponen sinusoidal dari encoding musiman, menangkap pola periodik tahunan kasus DBD di Indonesia.',
@@ -1753,9 +1815,19 @@ function initModel() {
     'kecepatan angin lag1': 'Angin kencang menghambat aktivitas terbang nyamuk, mengurangi kontak dengan manusia.',
     'lama penyinaran lag1': 'Durasi penyinaran matahari memengaruhi aktivitas nyamuk yang cenderung menggigit saat senja dan fajar.'
   };
-  SHAP_FEATS.slice(0,5).forEach(f=>{
+  // Fungsi lookup case-insensitive dan toleran spasi
+  function getShapExplain(name) {
+    const key = name.toLowerCase().trim();
+    if(shapExplanations[key]) return shapExplanations[key];
+    // coba match parsial
+    for(const k in shapExplanations) {
+      if(key.includes(k) || k.includes(key)) return shapExplanations[k];
+    }
+    return 'Fitur ini berkontribusi pada prediksi model dengan pengaruh yang terukur secara statistik.';
+  }
+  if(se) SHAP_FEATS.slice(0,5).forEach(f=>{
     const pct = Math.round((f.val||0)*100);
-    const explanation = shapExplanations[f.name] || 'Fitur ini berkontribusi pada prediksi model dengan pengaruh yang terukur.';
+    const explanation = getShapExplain(f.name);
     se.innerHTML+=`<div style="margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--bord)">
       <div class="metric-bar" style="margin-bottom:8px"><div class="metric-name" style="font-weight:700;color:var(--txt)">${f.name}</div><div style="flex:1"><div class="prog-track"><div class="prog-fill" style="background:var(--c-blue);width:${pct}%"></div></div></div><div class="metric-val" style="color:var(--c-blue)">${(f.val||0).toFixed(2)}</div></div>
       <div style="font-size:11.5px;color:var(--txt2);line-height:1.6;padding-left:2px">${explanation}</div>
@@ -1765,8 +1837,11 @@ function initModel() {
   // Gunakan data dari file JSON jika tersedia, jika tidak generate data simulasi berdasarkan model
   if(window._scatterData && window._scatterData.lightgbm) {
     window._scatterData.lightgbm.forEach(pt => scatterData.push({x: pt.actual, y: pt.predicted}));
+    const sub = document.getElementById('scatter-subtitle');
+    if(sub) sub.textContent = 'Data aktual vs prediksi LightGBM fold terakhir (2025). Titik di garis diagonal = prediksi sempurna. Diambil dari scatter_data.json.';
   } else {
     // Generate scatter data berdasarkan performa model LightGBM (R²=0.76, MAE=1.78)
+    // Data representatif - untuk data nyata ekspor scatter_data.json dari Colab
     for(let i=0;i<180;i++){
       const actual=Math.max(0,Math.random()*12);
       // Simulasi prediksi dengan noise sesuai performa model
@@ -1774,6 +1849,8 @@ function initModel() {
       const predicted = Math.max(0, actual * 0.92 + 0.3 + noise);
       scatterData.push({x:+(actual).toFixed(2),y:+(predicted).toFixed(2)});
     }
+    const sub = document.getElementById('scatter-subtitle');
+    if(sub) sub.innerHTML = 'Titik-titik ideal berada di garis diagonal. <em style="color:var(--c-amber)">Data representatif (simulasi berdasarkan R²=0.76, MAE=1.78) — tambahkan scatter_data.json dari Colab untuk data nyata.</em>';
   }
   mkChart('chartScatter',{
     type:'scatter',
@@ -2118,9 +2195,21 @@ function runYearSim() {
   });
 }
 
+function normalizeModelKey(key) {
+  if(!key) return 'lgb';
+  const k = key.toLowerCase().replace(/-/g,'_');
+  if(k.includes('naive') || k.includes('baseline')) return 'naive';
+  if(k.includes('poisson') || k.includes('ridge')) return 'poisson';
+  if(k.includes('xgb') || k.includes('xgboost')) return 'xgb';
+  if(k.includes('lgb') || k.includes('lightgbm') || k.includes('light_gbm')) return 'lgb';
+  if(k.includes('cat') || k.includes('catboost')) return 'cat';
+  return k;
+}
+
 function runModelSim() {
-  const kecId=document.getElementById('sim-kec-mdl')?.value||KECAMATAN[0].id;
+  const kecId=document.getElementById('sim-kec-mdl')?.value||KECAMATAN[0]?.id;
   const week=parseInt(document.getElementById('sim-week-mdl')?.value||6);
+  if(!kecId || !KEC_MAP[kecId]) return;
   const kec=KEC_MAP[kecId]||KECAMATAN[0];
   const basePred=getPred(kec,'2026',week);
   
@@ -2134,12 +2223,14 @@ function runModelSim() {
   };
   
   const bars=document.getElementById('model-pred-bars');
+  if(!bars) return;
   bars.innerHTML='';
   const maxV=Math.max(...Object.values(modelPreds));
   MODELS.forEach(m=>{
-    const v=modelPreds[m.key];
+    const normKey = normalizeModelKey(m.key);
+    const v = modelPreds[normKey] ?? basePred;
     const pct=Math.round(v/Math.max(maxV,0.01)*100);
-    const barColor = m.best ? 'var(--c-blue)' : m.R2 > 0.7 ? 'var(--c-teal)' : m.R2 > 0.3 ? 'var(--z-kuning)' : 'var(--txt3)';
+    const barColor = m.best ? 'var(--c-blue)' : (m.R2||0) > 0.7 ? 'var(--c-teal)' : (m.R2||0) > 0.3 ? 'var(--z-kuning)' : 'var(--txt3)';
     bars.innerHTML+=`<div class="metric-bar" style="margin-bottom:12px">
       <div class="metric-name" style="min-width:120px">${m.name}${m.best?' <span class="best-badge" style="font-size:8px">BEST</span>':''}</div>
       <div style="flex:1"><div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${barColor}"></div></div></div>
@@ -2162,8 +2253,8 @@ function runModelSim() {
   
   mkChart('chartModelComp',{
     type:'bar',
-    data:{labels:MODELS.map(m=>m.name),datasets:[{label:'Prediksi Kasus',data:MODELS.map(m=>+modelPreds[m.key].toFixed(2)),backgroundColor:MODELS.map(m=>m.best?'rgba(0,170,255,0.85)':m.R2>0.7?'rgba(0,210,200,0.7)':m.R2>0.3?'rgba(244,185,66,0.6)':'rgba(107,114,128,0.5)'),borderWidth:0,borderRadius:4}]},
-    options:{scales:{y:{title:{display:true,text:'Prediksi Kasus',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`${l.raw.toFixed(2)} kasus (${MODELS[l.dataIndex].name})`}}}}
+    data:{labels:MODELS.map(m=>m.name),datasets:[{label:'Prediksi Kasus',data:MODELS.map(m=>+(modelPreds[normalizeModelKey(m.key)]??basePred).toFixed(2)),backgroundColor:MODELS.map(m=>m.best?'rgba(0,170,255,0.85)':(m.R2||0)>0.7?'rgba(0,210,200,0.7)':(m.R2||0)>0.3?'rgba(244,185,66,0.6)':'rgba(107,114,128,0.5)'),borderWidth:0,borderRadius:4}]},
+    options:{scales:{y:{title:{display:true,text:'Prediksi Kasus',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`${l.raw.toFixed(2)} kasus (${MODELS[l.dataIndex]?.name||''})`}}}}
   });
 }
 
@@ -2273,7 +2364,7 @@ async function loadAllData() {
     mdlRes.value.forEach(m => {
       MODELS.push({
         name: m.name,
-        key: m.key,
+        key: m.key,  // simpan key asli dari JSON
         R2: m.R2,
         MAE: m.MAE,
         RMSE: m.RMSE,
@@ -2281,7 +2372,7 @@ async function loadAllData() {
         best: m.best
       });
     });
-    console.log('[SIPEDA] Loaded model_metrics.json');
+    console.log('[SIPEDA] Loaded model_metrics.json:', MODELS.map(m=>m.key));
   }
 
   if(shapRes.status === 'fulfilled' && shapRes.value) {
@@ -2329,9 +2420,42 @@ async function loadAllData() {
     }
   });
 
+  // Update ticker dengan data nyata setelah load
+  updateTicker();
+
   initBgCanvas();
   navigate('beranda');
   setTimeout(()=>updateTabIndicator('beranda'), 50);
+}
+
+function updateTicker() {
+  const q = window._q1Summary;
+  const best = MODELS.find(m=>m.best) || MODELS[0];
+  const topFeat = SHAP_FEATS[0];
+  const totalKasus = q ? Math.round(q.total_kasus) : 2247;
+  const peakWeek = q && q.weekly ? (() => {
+    const mx = Math.max(...q.weekly.map(w=>w.merah_ewars||0));
+    const weeks = q.weekly.filter(w=>(w.merah_ewars||0)===mx).map(w=>w.week);
+    return weeks.length > 1 ? `Minggu ${weeks[0]}-${weeks[weeks.length-1]}` : `Minggu ${weeks[0]}`;
+  })() : 'Minggu 5-7';
+  const peakCount = q && q.weekly ? Math.max(...q.weekly.map(w=>w.merah_ewars||0)) : 18;
+  const tickItems = [
+    {color:'var(--c-red)', text:`Total kasus DBD Q1 2026 diprediksi: <strong style="color:var(--c-red)">${totalKasus.toLocaleString('id')} kasus</strong> - 13 minggu pertama`},
+    {color:'var(--c-blue)', text:`Data historis: 2017-2025 · <strong style="color:var(--c-blue)">${KECAMATAN.length} kecamatan</strong> DKI Jakarta · granularitas mingguan`},
+    {color:'var(--c-amber)', text:`Model terbaik: <strong style="color:var(--c-amber)">${best.name}</strong> · R²=${(best.R2||0).toFixed(2)} · MAE=${(best.MAE||0).toFixed(2)} kasus/minggu/kec`},
+    {color:'var(--z-merah)', text:`Puncak risiko Q1: <strong style="color:var(--z-merah)">${peakWeek}</strong> · ${peakCount}-${peakCount+3} kecamatan zona Merah`},
+    {color:'var(--c-green)', text:`Moran's I autokorelasi spasial DBD: <strong style="color:var(--c-green)">signifikan</strong> · klaster teridentifikasi`},
+    {color:'var(--c-teal)', text:`Fitur terpenting: <strong style="color:var(--c-teal)">${topFeat ? topFeat.name : 'kasus lag1'}</strong> · curah hujan lag1 · suhu rata`},
+    {color:'var(--c-purple)', text:`CV rolling window: <strong style="color:var(--c-purple)">3 fold</strong> · 2023 / 2024 / 2025 sebagai tahun validasi`},
+  ];
+  const inner = document.getElementById('ticker-inner');
+  if(!inner) return;
+  // Buat 2 salinan untuk loop tanpa henti
+  let html = '';
+  for(let r=0;r<2;r++) tickItems.forEach(t=>{
+    html+=`<span class="tick-item"><span class="tick-dot" style="background:${t.color}"></span>${t.text}</span>`;
+  });
+  inner.innerHTML = html;
 }
 
 // Formula fallback (tanpa real data)
