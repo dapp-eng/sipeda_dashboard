@@ -675,14 +675,14 @@ canvas{max-width:100%;}
     <div class="ticker-inner" id="ticker-inner">
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-red)"></span>Total kasus DBD Q1 2026 diprediksi: <strong style="color:var(--c-red)">2.247 kasus</strong> - 13 minggu pertama</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-blue)"></span>Data historis: 2017-2025 · <strong style="color:var(--c-blue)">44 kecamatan</strong> DKI Jakarta · granularitas mingguan</span>
-      <span class="tick-item"><span class="tick-dot" style="background:var(--c-amber)"></span>Model terbaik: <strong style="color:var(--c-amber)">LightGBM Tweedie</strong> · R²=0.76 · MAE=1.78 kasus/minggu/kec</span>
+      <span class="tick-item"><span class="tick-dot" style="background:var(--c-amber)"></span>Model terbaik: <strong style="color:var(--c-amber)">LightGBM Tweedie</strong> · R²=0.77 · MAE=2.95 kasus/minggu/kec</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--z-merah)"></span>Puncak risiko Q1: <strong style="color:var(--z-merah)">Minggu 5-7</strong> · 15-18 kecamatan zona Merah</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-green)"></span>Moran's I autokorelasi spasial DBD: <strong style="color:var(--c-green)">signifikan</strong> · klaster teridentifikasi</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-teal)"></span>Fitur terpenting: <strong style="color:var(--c-teal)">kasus lag1</strong> · curah hujan lag1 · suhu rata</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-purple)"></span>CV rolling window: <strong style="color:var(--c-purple)">3 fold</strong> · 2023 / 2024 / 2025 sebagai tahun validasi</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-red)"></span>Total kasus DBD Q1 2026 diprediksi: <strong style="color:var(--c-red)">2.247 kasus</strong> - 13 minggu pertama</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-blue)"></span>Data historis: 2017-2025 · <strong style="color:var(--c-blue)">44 kecamatan</strong> DKI Jakarta · granularitas mingguan</span>
-      <span class="tick-item"><span class="tick-dot" style="background:var(--c-amber)"></span>Model terbaik: <strong style="color:var(--c-amber)">LightGBM Tweedie</strong> · R²=0.76 · MAE=1.78 kasus/minggu/kec</span>
+      <span class="tick-item"><span class="tick-dot" style="background:var(--c-amber)"></span>Model terbaik: <strong style="color:var(--c-amber)">LightGBM Tweedie</strong> · R²=0.77 · MAE=2.95 kasus/minggu/kec</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--z-merah)"></span>Puncak risiko Q1: <strong style="color:var(--z-merah)">Minggu 5-7</strong> · 15-18 kecamatan zona Merah</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-green)"></span>Moran's I autokorelasi spasial DBD: <strong style="color:var(--c-green)">signifikan</strong> · klaster teridentifikasi</span>
       <span class="tick-item"><span class="tick-dot" style="background:var(--c-teal)"></span>Fitur terpenting: <strong style="color:var(--c-teal)">kasus lag1</strong> · curah hujan lag1 · suhu rata</span>
@@ -930,7 +930,7 @@ canvas{max-width:100%;}
       <div class="card-top" style="background:linear-gradient(90deg,var(--c-blue),var(--c-teal))"></div>
       <div class="card-label">Model Terbaik R2</div>
       <div class="card-value mono" style="color:var(--c-blue)" id="kpi-r2-val">0.76</div>
-      <div class="card-sub" id="kpi-r2-sub">LightGBM Tweedie · MAE = 1.78 kasus/minggu</div>
+      <div class="card-sub" id="kpi-r2-sub">LightGBM Tweedie · MAE = 2.95 kasus/minggu</div>
       <div class="card-trend"><span style="color:var(--c-green)">▲</span><span style="color:var(--txt3)">Terbaik dari 5 model kandidat</span></div>
     </div>
     <div class="card">
@@ -1316,7 +1316,7 @@ canvas{max-width:100%;}
   <div class="sim-pane" id="simpane-3">
     <div class="info-box mb16" style="background:rgba(139,92,246,0.05);border-color:rgba(139,92,246,0.18)">
       <div class="info-icon" style="color:var(--c-purple)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect x="9" y="9" width="6" height="6" rx="1"/><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></div>
-      <div><strong>Perbandingan 5 Model ML</strong> - Lihat bagaimana setiap model memberikan prediksi berbeda untuk kecamatan dan minggu yang sama. LightGBM Tweedie dipilih sebagai model terbaik dengan R²=0.76 dan MAE=1.78.</div>
+      <div><strong>Perbandingan 5 Model ML</strong> - Lihat bagaimana setiap model memberikan prediksi berbeda untuk kecamatan dan minggu yang sama. LightGBM Tweedie dipilih sebagai model terbaik dengan R²=0.77 dan MAE=2.95.</div>
     </div>
     <div class="g2 mb16">
       <div class="card">
@@ -1495,11 +1495,11 @@ const KECAMATAN_DEMO = [
 let KEC_MAP = {};
 const YEAR_EFF = {2017:1.0,2018:1.08,2019:0.92,2020:1.38,2021:0.85,2022:0.93,2023:1.04,2024:1.12,2025:1.00,2026:1.16};
 const MODELS = [
-  {name:'Naive Baseline',key:'naive',R2:0.18,MAE:3.52,RMSE:5.81,MAPE:128,best:false},
-  {name:'Poisson Ridge',key:'poisson',R2:0.35,MAE:2.87,RMSE:4.73,MAPE:104,best:false},
-  {name:'XGBoost',key:'xgb',R2:0.71,MAE:1.96,RMSE:3.28,MAPE:70,best:false},
-  {name:'LightGBM',key:'lgb',R2:0.76,MAE:1.78,RMSE:3.05,MAPE:63,best:true},
-  {name:'CatBoost',key:'cat',R2:0.73,MAE:1.88,RMSE:3.17,MAPE:66,best:false},
+  {name:'Naive Baseline',key:'naive',R2:0.69,MAE:3.40,RMSE:4.95,MAPE:128,best:false},
+  {name:'Poisson Ridge',key:'poisson',R2:0.57,MAE:3.89,RMSE:5.75,MAPE:104,best:false},
+  {name:'XGBoost',key:'xgb',R2:0.76,MAE:3.01,RMSE:4.29,MAPE:70,best:false},
+  {name:'LightGBM',key:'lgb',R2:0.77,MAE:2.95,RMSE:4.20,MAPE:63,best:true},
+  {name:'CatBoost',key:'cat',R2:0.76,MAE:2.92,RMSE:4.22,MAPE:66,best:false},
 ];
 const SHAP_FEATS = [
   {name:'kasus DBD lag1',val:0.89},{name:'kasus DBD lag2',val:0.67},
