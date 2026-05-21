@@ -12,19 +12,49 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg:#030a16;--bg1:#060f1e;--bg2:#0a1829;--bg3:#0f2138;--bg4:#162d4e;
-  --bord:#1b3358;--bord2:#254b7a;--txt:#e2f0fc;--txt2:#6fa8d0;--txt3:#355f82;
-  --card:rgba(9,20,38,0.88);--c-blue:#00aaff;--c-red:#e63946;--c-green:#2ecc71;
-  --c-amber:#f4b942;--c-teal:#00d2c8;--c-purple:#8b5cf6;
-  --z-merah:#e63946;--z-kuning:#f4b942;--z-hijau:#2ecc71;
-  --glow-b:0 0 20px rgba(0,170,255,0.3);--glow-r:0 0 20px rgba(230,57,70,0.35);
+  /* === SIPEDA DBD DARK THEME — TROPICAL BLOOD NIGHT === */
+  /* Base: Deep jungle midnight — rich dark crimson-charcoal, immersive */
+  --bg:#0c0a0d;--bg1:#140d10;--bg2:#1c1117;--bg3:#27161e;--bg4:#341d28;
+  --bord:#4a2030;--bord2:#7a3348;
+  --txt:#ffe8ec;--txt2:#c4899a;--txt3:#7a4455;
+  --card:rgba(20,13,16,0.93);
+
+  /* Accent palette — rich tropical-medical spectrum */
+  --c-blue:#f97316;        /* tropical fire orange — primary accent (nyamuk/panas) */
+  --c-red:#ff2d55;         /* blood crimson — danger/KLB alarm */
+  --c-green:#10b981;       /* jungle emerald — safe/sehat */
+  --c-amber:#f59e0b;       /* fever gold — warning/waspada */
+  --c-teal:#06b6d4;        /* rainfall cyan — data/curah hujan */
+  --c-purple:#c084fc;      /* heatmap violet — model/prediksi */
+  --c-orange:#ef4444;      /* dengue scarlet — secondary alert */
+
+  /* Extended rich palette for variation */
+  --c-coral:#ff6b6b;       /* warm coral — mild alert */
+  --c-lime:#84cc16;        /* lime bio — ecology accent */
+  --c-rose:#fb7185;        /* rose — epidemi soft */
+  --c-indigo:#818cf8;      /* indigo — statistical accent */
+  --c-yellow:#fde047;      /* bright canary — highlight */
+
+  /* Zone colors — DBD severity (vivid, distinct) */
+  --z-merah:#ff2d55;       /* urgent blood red */
+  --z-kuning:#f59e0b;      /* fever amber */
+  --z-hijau:#10b981;       /* clear jungle green */
+
+  /* Glows — warm tropical */
+  --glow-b:0 0 28px rgba(249,115,22,0.4);
+  --glow-r:0 0 28px rgba(255,45,85,0.45);
+  --glow-g:0 0 20px rgba(16,185,129,0.3);
 }
 [data-theme="light"] {
-  --bg:#f0f7ff;--bg1:#e4f0fb;--bg2:#d5e8f7;--bg3:#c3d9f0;--bg4:#aec9e8;
-  --bord:#8ab4d9;--bord2:#5a90c0;--txt:#071525;--txt2:#1a4e7a;--txt3:#3a6a9a;
-  --card:rgba(255,255,255,0.94);--c-blue:#0070dd;--c-red:#d12836;--c-green:#1a8a3c;
-  --c-amber:#c47a00;--c-teal:#008a86;--c-purple:#6d30d4;
-  --z-merah:#d12836;--z-kuning:#c47a00;--z-hijau:#1a8a3c;
+  /* Light: warm cream/sand with rich crimson-tropical ink */
+  --bg:#fdf8f0;--bg1:#faf0ea;--bg2:#f5e6da;--bg3:#eedacc;--bg4:#e6ccbc;
+  --bord:#d4a090;--bord2:#b0604a;
+  --txt:#1a0808;--txt2:#7a2e1a;--txt3:#b05840;
+  --card:rgba(255,252,248,0.97);
+  --c-blue:#ea580c;--c-red:#be123c;--c-green:#047857;
+  --c-amber:#b45309;--c-teal:#0e7490;--c-purple:#9333ea;--c-orange:#dc2626;
+  --c-coral:#e85d5d;--c-lime:#65a30d;--c-rose:#e11d48;--c-indigo:#4f46e5;--c-yellow:#ca8a04;
+  --z-merah:#be123c;--z-kuning:#b45309;--z-hijau:#047857;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -32,16 +62,16 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);min-
 *,*::before,*::after{transition:background-color .22s ease,border-color .22s ease,color .2s ease,box-shadow .22s ease;}
 .leaflet-container,canvas,.kec-marker,.kec-pulse,.ticker-inner,#bg-canvas{transition:none!important;}
 
-#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.55;}
-[data-theme="light"] #bg-canvas{opacity:0.2;}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.7;}
+[data-theme="light"] #bg-canvas{opacity:0.18;}
 
 /* HEADER */
-.header{position:fixed;top:0;left:0;right:0;height:56px;z-index:100;display:flex;align-items:center;gap:16px;padding:0 20px;background:rgba(3,10,22,0.92);border-bottom:1px solid var(--bord);backdrop-filter:blur(16px);}
-[data-theme="light"] .header{background:rgba(240,247,255,0.96);}
+.header{position:fixed;top:0;left:0;right:0;height:56px;z-index:100;display:flex;align-items:center;gap:16px;padding:0 20px;background:rgba(12,10,13,0.96);border-bottom:1px solid var(--bord);backdrop-filter:blur(20px);}
+[data-theme="light"] .header{background:rgba(253,248,240,0.97);}
 .header-logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none;cursor:pointer;}
 .logo-svg{width:34px;height:34px;flex-shrink:0;}
 .logo-text{font-family:'Sora',sans-serif;font-size:18px;font-weight:900;letter-spacing:-0.5px;}
-.logo-text .si{color:var(--c-blue);}.logo-text .pe{color:var(--c-teal);}.logo-text .da{color:var(--txt);}
+.logo-text .si{color:var(--c-blue);}.logo-text .pe{color:var(--c-red);}.logo-text .da{color:var(--txt);}
 .header-divider{width:1px;height:28px;background:var(--bord);flex-shrink:0;}
 .header-sub{font-size:11px;color:var(--txt3);flex-shrink:0;display:none;}
 @media(min-width:900px){.header-sub{display:block;}}
@@ -54,10 +84,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);min-
 .hdr-btn:hover{background:var(--bg3);color:var(--txt);}
 
 /* TAB BAR */
-.tabbar{position:fixed;top:56px;left:0;right:0;height:50px;z-index:99;background:rgba(6,15,30,0.95);border-bottom:1px solid var(--bord);backdrop-filter:blur(16px);display:flex;align-items:stretch;padding:0;gap:0;overflow-x:auto;scrollbar-width:none;}
+.tabbar{position:fixed;top:56px;left:0;right:0;height:50px;z-index:99;background:rgba(12,10,13,0.97);border-bottom:1px solid var(--bord);backdrop-filter:blur(20px);display:flex;align-items:stretch;padding:0;gap:0;overflow-x:auto;scrollbar-width:none;}
 .tabbar::-webkit-scrollbar{display:none;}
-[data-theme="light"] .tabbar{background:rgba(228,240,251,0.97);}
-.tab-indicator{position:absolute;bottom:0;height:2.5px;background:linear-gradient(90deg,var(--c-blue),var(--c-teal));border-radius:2px 2px 0 0;transition:left .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px var(--c-blue);pointer-events:none;}
+[data-theme="light"] .tabbar{background:rgba(250,240,234,0.98);}
+.tab-indicator{position:absolute;bottom:0;height:2.5px;background:linear-gradient(90deg,var(--c-blue),var(--c-red));border-radius:2px 2px 0 0;transition:left .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1);box-shadow:0 0 12px var(--c-blue);pointer-events:none;}
 .tab{display:flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;height:50px;white-space:nowrap;font-size:13px;font-weight:600;color:var(--txt3);cursor:pointer;position:relative;flex:1;min-width:0;border-bottom:2.5px solid transparent;}
 .tab:hover{color:var(--txt2);}.tab.active{color:var(--c-blue);}
 .tab-icon{font-size:15px;line-height:1;display:flex;align-items:center;color:inherit;}
@@ -66,9 +96,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);min-
 .tab-star{font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;background:linear-gradient(135deg,var(--c-blue),var(--c-teal));color:#fff;margin-left:2px;}
 
 /* TICKER */
-.ticker{position:fixed;top:106px;left:0;right:0;height:36px;z-index:98;display:flex;align-items:stretch;background:rgba(3,10,22,0.88);border-bottom:1px solid var(--bord);overflow:hidden;}
-[data-theme="light"] .ticker{background:rgba(213,232,247,0.97);}
-.ticker-label{display:flex;align-items:center;gap:6px;padding:0 14px;flex-shrink:0;font-size:11px;font-weight:800;color:var(--c-blue);letter-spacing:1px;text-transform:uppercase;background:rgba(0,170,255,0.08);border-right:1px solid var(--bord);}
+.ticker{position:fixed;top:106px;left:0;right:0;height:36px;z-index:98;display:flex;align-items:stretch;background:rgba(12,10,13,0.93);border-bottom:1px solid var(--bord);overflow:hidden;}
+[data-theme="light"] .ticker{background:rgba(245,230,218,0.98);}
+.ticker-label{display:flex;align-items:center;gap:6px;padding:0 14px;flex-shrink:0;font-size:11px;font-weight:800;color:var(--c-red);letter-spacing:1px;text-transform:uppercase;background:rgba(255,45,85,0.1);border-right:1px solid var(--bord);}
 .ticker-track{flex:1;overflow:hidden;display:flex;align-items:center;}
 .ticker-inner{display:inline-flex;white-space:nowrap;gap:0;animation:ticker-run 70s linear infinite;}
 .ticker-inner:hover{animation-play-state:paused;}
@@ -132,66 +162,66 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);min-
 .tbl-htitle{font-family:'Sora',sans-serif;font-size:13px;font-weight:800;}
 .tbl-scroll{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
-thead th{background:rgba(15,33,56,0.9);color:var(--txt3);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;padding:10px 14px;text-align:left;border-bottom:1px solid var(--bord);white-space:nowrap;}
-[data-theme="light"] thead th{background:rgba(195,217,240,0.95);}
-tbody tr td{font-size:13px;padding:10px 14px;border-bottom:1px solid rgba(27,51,88,0.25);color:var(--txt2);vertical-align:middle;}
+thead th{background:rgba(30,10,15,0.9);color:var(--txt3);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;padding:10px 14px;text-align:left;border-bottom:1px solid var(--bord);white-space:nowrap;}
+[data-theme="light"] thead th{background:rgba(228,204,188,0.95);}
+tbody tr td{font-size:13px;padding:10px 14px;border-bottom:1px solid rgba(74,32,48,0.25);color:var(--txt2);vertical-align:middle;}
 tbody tr:last-child td{border-bottom:none;}
-tbody tr:nth-child(even){background:rgba(22,45,78,0.25);}
-tbody tr:hover{background:rgba(0,170,255,0.06);}
-[data-theme="light"] tbody tr:nth-child(even){background:rgba(195,217,240,0.2);}
-[data-theme="light"] tbody tr:hover{background:rgba(0,112,221,0.05);}
+tbody tr:nth-child(even){background:rgba(52,29,40,0.2);}
+tbody tr:hover{background:rgba(249,115,22,0.06);}
+[data-theme="light"] tbody tr:nth-child(even){background:rgba(234,88,12,0.07);}
+[data-theme="light"] tbody tr:hover{background:rgba(190,18,60,0.05);}
 
 /* INFO BOX */
-.info-box{display:flex;gap:12px;padding:14px 16px;background:rgba(0,170,255,0.05);border:1px solid rgba(0,170,255,0.18);border-radius:12px;margin-bottom:16px;font-size:12.5px;color:var(--txt2);line-height:1.7;}
+.info-box{display:flex;gap:12px;padding:14px 16px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.2);border-radius:12px;margin-bottom:16px;font-size:12.5px;color:var(--txt2);line-height:1.7;}
 .info-icon{flex-shrink:0;font-size:18px;margin-top:1px;display:flex;align-items:center;color:var(--c-blue);}
 
 /* CONTROLS */
 .ctrl-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
-.ctrl-sel{padding:8px 12px;border-radius:9px;background:var(--bg2);border:1px solid var(--bord);color:var(--txt);font-size:12px;font-family:inherit;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M6 8 L0 0 L12 0 Z' fill='%236fa8d0'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.ctrl-sel{padding:8px 12px;border-radius:9px;background:var(--bg2);border:1px solid var(--bord);color:var(--txt);font-size:12px;font-family:inherit;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M6 8 L0 0 L12 0 Z' fill='%23f97316'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
 .ctrl-sel:focus{border-color:var(--c-blue);}
 .ctrl-label{font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.6px;}
-.ctrl-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:7px;background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.25);color:var(--c-blue);font-family:'JetBrains Mono',monospace;}
+.ctrl-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:7px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);color:var(--c-blue);font-family:'JetBrains Mono',monospace;}
 
 /* SLIDERS */
 .slider-wrap{display:flex;flex-direction:column;gap:6px;}
-input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:linear-gradient(90deg,var(--c-blue) var(--pct,0%),rgba(27,51,88,0.6) var(--pct,0%));border-radius:3px;outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--c-blue);box-shadow:0 0 8px rgba(0,170,255,0.6);cursor:pointer;}
-input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;border:none;background:var(--c-blue);box-shadow:0 0 8px rgba(0,170,255,0.6);}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:linear-gradient(90deg,var(--c-blue) var(--pct,0%),rgba(74,32,48,0.6) var(--pct,0%));border-radius:3px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--c-blue);box-shadow:0 0 8px rgba(249,115,22,0.7);cursor:pointer;}
+input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;border:none;background:var(--c-blue);box-shadow:0 0 8px rgba(249,115,22,0.7);}
 .slider-row{display:flex;justify-content:space-between;font-size:11px;color:var(--txt3);}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:9px;border:none;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;}
-.btn-pri{background:linear-gradient(135deg,var(--c-blue),var(--c-teal));color:#fff;}
-.btn-pri:hover{filter:brightness(1.1);}
+.btn-pri{background:linear-gradient(135deg,var(--c-blue),var(--c-red));color:#fff;}
+.btn-pri:hover{filter:brightness(1.12);}
 .btn-sec{background:var(--bg2);border:1px solid var(--bord);color:var(--txt2);}
 .btn-sec:hover{background:var(--bg3);color:var(--txt);}
 .btn-sm{padding:6px 12px;font-size:11px;}
 
 /* TAGS */
 .tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;}
-.tag-blue{background:rgba(0,170,255,0.1);color:var(--c-blue);border:1px solid rgba(0,170,255,0.25);}
-.tag-red{background:rgba(230,57,70,0.1);color:var(--z-merah);border:1px solid rgba(230,57,70,0.25);}
-.tag-green{background:rgba(46,204,113,0.1);color:var(--z-hijau);border:1px solid rgba(46,204,113,0.25);}
-.tag-amber{background:rgba(244,185,66,0.1);color:var(--z-kuning);border:1px solid rgba(244,185,66,0.25);}
-.tag-teal{background:rgba(0,210,200,0.1);color:var(--c-teal);border:1px solid rgba(0,210,200,0.25);}
+.tag-blue{background:rgba(249,115,22,0.1);color:var(--c-blue);border:1px solid rgba(249,115,22,0.3);}
+.tag-red{background:rgba(255,45,85,0.1);color:var(--z-merah);border:1px solid rgba(255,45,85,0.3);}
+.tag-green{background:rgba(16,185,129,0.1);color:var(--z-hijau);border:1px solid rgba(16,185,129,0.3);}
+.tag-amber{background:rgba(245,158,11,0.1);color:var(--z-kuning);border:1px solid rgba(245,158,11,0.3);}
+.tag-teal{background:rgba(6,182,212,0.1);color:var(--c-teal);border:1px solid rgba(6,182,212,0.3);}
 
 /* HERO */
-.hero{border:1px solid var(--bord);border-radius:18px;padding:32px 32px 28px;position:relative;overflow:hidden;margin-bottom:20px;background:linear-gradient(135deg,rgba(0,170,255,0.07),rgba(0,170,255,0.03),rgba(0,210,200,0.04),transparent);}
-.hero-glow1{position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,170,255,0.1),transparent 70%);pointer-events:none;animation:float-glow 6s ease-in-out infinite;}
-.hero-glow2{position:absolute;bottom:-60px;left:30%;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(230,57,70,0.07),transparent 70%);pointer-events:none;animation:float-glow 8s ease-in-out infinite reverse;}
+.hero{border:1px solid var(--bord);border-radius:18px;padding:32px 32px 28px;position:relative;overflow:hidden;margin-bottom:20px;background:linear-gradient(135deg,rgba(249,115,22,0.07),rgba(255,45,85,0.04),rgba(192,132,252,0.05),transparent);}
+.hero-glow1{position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,0.14),transparent 70%);pointer-events:none;animation:float-glow 6s ease-in-out infinite;}
+.hero-glow2{position:absolute;bottom:-60px;left:30%;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,85,0.1),transparent 70%);pointer-events:none;animation:float-glow 8s ease-in-out infinite reverse;}
 @keyframes float-glow{0%,100%{transform:translate(0,0);}50%{transform:translate(10px,-15px);}}
 .hero-inner{display:grid;grid-template-columns:1fr 400px auto;gap:14px;align-items:center;position:relative;z-index:1;}
 @media(max-width:1200px){.hero-inner{grid-template-columns:1fr auto;}}
 .hero-mid{display:flex;justify-content:flex-start;align-items:center;margin-left:-70px;padding-top:28px;}@media(max-width:1200px){.hero-mid{display:none;}}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;font-size:11px;font-weight:700;color:var(--c-blue);background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.25);padding:5px 12px;border-radius:20px;}
-.hero-title{font-family:'Sora',sans-serif;font-size:34px;font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:14px;background:linear-gradient(135deg,var(--txt) 0%,var(--c-blue) 50%,var(--c-teal) 90%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-[data-theme="light"] .hero-title{background:linear-gradient(135deg,#071525 0%,#0070dd 50%,#008a86 90%);-webkit-background-clip:text;background-clip:text;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;font-size:11px;font-weight:700;color:var(--c-blue);background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);padding:5px 12px;border-radius:20px;}
+.hero-title{font-family:'Sora',sans-serif;font-size:34px;font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:14px;background:linear-gradient(135deg,var(--txt) 0%,var(--c-blue) 40%,var(--c-red) 75%,var(--c-purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+[data-theme="light"] .hero-title{background:linear-gradient(135deg,#1a0808 0%,#ea580c 40%,#be123c 75%,#9333ea 100%);-webkit-background-clip:text;background-clip:text;}
 .hero-desc{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:20px;max-width:560px;}
 .hero-stats{display:flex;gap:22px;flex-wrap:wrap;}
 .hstat{padding-right:22px;border-right:1px solid var(--bord);}.hstat:last-child{border-right:none;}
-.hstat-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--c-blue),var(--c-teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hstat-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--c-blue),var(--c-amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .hstat-label{font-size:11px;color:var(--txt3);font-weight:700;text-transform:uppercase;letter-spacing:0.6px;margin-top:2px;}
-.hero-chart{width:280px;min-width:240px;background:rgba(0,170,255,0.04);border:1px solid rgba(0,170,255,0.15);border-radius:12px;padding:14px;}
+.hero-chart{width:280px;min-width:240px;background:rgba(249,115,22,0.04);border:1px solid rgba(249,115,22,0.18);border-radius:12px;padding:14px;}
 .hero-chart-title{font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
 
 
@@ -239,19 +269,19 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;bor
 /* MAP PAGE */
 .map-ctrl-bar{background:var(--card);border:1px solid var(--bord);border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
 .map-ctrl-sep{width:1px;height:28px;background:var(--bord);flex-shrink:0;}
-.week-disp{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--c-blue);min-width:80px;text-align:center;background:rgba(0,170,255,0.08);border:1px solid rgba(0,170,255,0.2);padding:6px 12px;border-radius:9px;}
-.play-btn{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--c-blue),var(--c-teal));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(0,170,255,0.4);}
+.week-disp{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--c-blue);min-width:80px;text-align:center;background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.25);padding:6px 12px;border-radius:9px;}
+.play-btn{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--c-blue),var(--c-purple));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(167,139,250,0.5);}
 .play-btn:hover{transform:scale(1.08);}
 .week-slider-wrap{flex:1;min-width:200px;}
 .dual-maps{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--bord);}
 .map-half{position:relative;flex:1;}
-.map-header{position:absolute;top:0;left:0;right:0;z-index:400;background:rgba(3,10,22,0.88);backdrop-filter:blur(8px);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bord);}
-[data-theme="light"] .map-header{background:rgba(240,247,255,0.92);}
+.map-header{position:absolute;top:0;left:0;right:0;z-index:400;background:rgba(13,10,20,0.9);backdrop-filter:blur(8px);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bord);}
+[data-theme="light"] .map-header{background:rgba(250,247,255,0.94);}
 .map-header-title{font-family:'Sora',sans-serif;font-size:12.5px;font-weight:800;}
 .map-header-sub{font-size:11px;color:var(--txt3);}
 #map-ewars,#map-ec{height:440px;width:100%;}
-.map-legend{position:absolute;bottom:10px;left:10px;z-index:400;background:rgba(3,10,22,0.9);backdrop-filter:blur(8px);border:1px solid var(--bord);border-radius:10px;padding:10px 14px;}
-[data-theme="light"] .map-legend{background:rgba(240,247,255,0.95);}
+.map-legend{position:absolute;bottom:10px;left:10px;z-index:400;background:rgba(13,10,20,0.93);backdrop-filter:blur(8px);border:1px solid var(--bord);border-radius:10px;padding:10px 14px;}
+[data-theme="light"] .map-legend{background:rgba(250,247,255,0.96);}
 .map-legend-title{font-size:9px;font-weight:800;color:var(--txt3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:7px;}
 .map-legend-item{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--txt2);margin-bottom:4px;}
 .map-legend-dot{width:14px;height:10px;border-radius:3px;flex-shrink:0;opacity:0.85;}
@@ -609,12 +639,12 @@ canvas{max-width:100%;}
 <header class="header">
   <div class="header-logo" onclick="navigate('beranda')">
     <svg class="logo-svg" viewBox="0 0 34 34">
-      <defs><radialGradient id="lg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00aaff" stop-opacity="0.9"/><stop offset="100%" stop-color="#00d2c8" stop-opacity="0.7"/></radialGradient></defs>
-      <circle cx="17" cy="17" r="16" fill="rgba(0,170,255,0.08)" stroke="rgba(0,170,255,0.35)" stroke-width="1.2"/>
+      <defs><radialGradient id="lg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0.9"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0.7"/></radialGradient></defs>
+      <circle cx="17" cy="17" r="16" fill="rgba(167,139,250,0.08)" stroke="rgba(167,139,250,0.4)" stroke-width="1.2"/>
       <path d="M17 6 Q22 12 22 17 Q22 22 17 26 Q12 22 12 17 Q12 12 17 6Z" fill="url(#lg1)" opacity="0.9"/>
-      <circle cx="17" cy="19" r="3.5" fill="#e63946" opacity="0.85"/>
-      <line x1="12" y1="17" x2="8" y2="14" stroke="#e63946" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-      <line x1="22" y1="17" x2="26" y2="14" stroke="#e63946" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+      <circle cx="17" cy="19" r="3.5" fill="#ff4d6d" opacity="0.9"/>
+      <line x1="12" y1="17" x2="8" y2="14" stroke="#ff4d6d" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+      <line x1="22" y1="17" x2="26" y2="14" stroke="#ff4d6d" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
     </svg>
     <span class="logo-text"><span class="si">SI</span><span class="pe">PE</span><span class="da">DA</span></span>
   </div>
@@ -1075,7 +1105,7 @@ canvas{max-width:100%;}
       <div class="map-header">
         <div>
           <div class="map-header-title" style="color:var(--c-blue)">Sistem 1: WHO EWARS Percentile</div>
-          <div class="map-header-sub">Hijau maksimal P50 · Kuning P50-P75 · Merah lebih dari P75</div>
+          <div class="map-header-sub" id="map-mode-label-1">Hijau maksimal P50 · Kuning P50-P75 · Merah lebih dari P75</div>
         </div>
         <span class="tag tag-blue" id="ewars-merah-count">Merah: 0</span>
       </div>
@@ -1123,7 +1153,7 @@ canvas{max-width:100%;}
   <div class="tbl-wrap">
     <div class="tbl-hrow"><span class="tbl-htitle">Kecamatan Zona Merah Minggu Ini</span><span class="tag tag-red" id="peta-week-label">Minggu 1</span></div>
     <div class="tbl-scroll"><table>
-      <thead><tr><th>#</th><th>Kecamatan</th><th>Kabupaten</th><th>Prediksi Kasus</th><th>Zona EWARS</th><th>Zona EC</th><th>Threshold P75</th></tr></thead>
+      <thead><tr><th>#</th><th>Kecamatan</th><th>Kabupaten</th><th id="tbl-kasus-col-hdr">Kasus</th><th>Zona EWARS</th><th>Zona EC</th><th>Threshold P75</th></tr></thead>
       <tbody id="tbl-peta-merah"></tbody>
     </table></div>
   </div>
@@ -1491,36 +1521,56 @@ function seededRand(seed) {
 }
 function getPred(kec, year, week) {
   const yr = parseInt(year);
-  // Gunakan data forecast nyata untuk Q1 2026
-  if(yr === 2026 && FC2026[kec.id] && FC2026[kec.id][week-1]) {
-    return FC2026[kec.id][week-1].pred;
+  if(yr === 2026) {
+    if(FC2026[kec.id] && FC2026[kec.id][week-1]) {
+      return FC2026[kec.id][week-1].pred;
+    }
+    return null;
   }
-  // Formula untuk tahun lain (atau minggu >13 tahun 2026)
-  const eff = YEAR_EFF[yr]||1.0;
-  const s = seasonal(week);
-  const noise = 0.75+0.5*seededRand(kec.id.charCodeAt(0)*week+yr*37);
-  return Math.max(0, kec.base * s * eff * noise);
+  if(window._historisKecWeekly) {
+    const kecData = window._historisKecWeekly[kec.id];
+    if(kecData && kecData[String(yr)]) {
+      const weekArr = kecData[String(yr)];
+      const val = weekArr[week-1];
+      return (val !== undefined && val !== null) ? Number(val) : 0;
+    }
+    return null;
+  }
+  return null;
+}
+function getPredSafe(kec, year, week) {
+  const v = getPred(kec, year, week);
+  return (v !== null && v !== undefined) ? v : 0;
 }
 function zonaEWARS(pred, kec) {
+  if(pred === null || pred === undefined) return 'No Data';
   if(pred > kec.P75) return 'Merah';
   if(pred > kec.P50) return 'Kuning';
   return 'Hijau';
 }
 function zonaEC(pred, kec) {
+  if(pred === null || pred === undefined) return 'No Data';
   if(pred > kec.ecMean+kec.ecSd) return 'Merah';
   if(pred > kec.ecMean) return 'Kuning';
   return 'Hijau';
 }
 // FC2026 diisi dari data/forecast_q1_2026.json setelah loadAllData()
 function getWeeklyTotals(year) {
-  if(window._historisWeekly && window._historisWeekly[String(year)]) {
-    return window._historisWeekly[String(year)];
+  const yr = parseInt(year);
+  if(window._historisWeekly && window._historisWeekly[String(yr)]) {
+    return window._historisWeekly[String(yr)];
   }
-  return Array.from({length:52},(_,i)=>KECAMATAN.reduce((s,k)=>s+getPred(k,year,i+1),0));
+  if(yr === 2026) {
+    return Array.from({length:52},(_,i)=>KECAMATAN.reduce((s,k)=>{const p=getPred(k,yr,i+1);return s+(p!==null?p:0);},0));
+  }
+  if(window._historisKecWeekly) {
+    return Array.from({length:52},(_,i)=>KECAMATAN.reduce((s,k)=>{const p=getPred(k,yr,i+1);return s+(p!==null?p:0);},0));
+  }
+  return null;
 }
 // KEC_POLYGONS dihapus — peta sekarang menggunakan GeoJSON dari data/jakarta.geojson
 
-const ZCOLORS = {Merah:'#e63946',Kuning:'#f4b942',Hijau:'#2ecc71'};
+const ZCOLORS = {Merah:'#e63946',Kuning:'#f4b942',Hijau:'#2ecc71','No Data':'#555'};
 
 /* ============================================================
    NAVIGATION
@@ -1723,7 +1773,7 @@ function initEDA() {
   const allWeeks=[],allVals=[];
   years.forEach(yr=>{
     const d=getWeeklyTotals(yr);
-    for(let w=0;w<52;w++){allWeeks.push(`${yr}-W${String(w+1).padStart(2,'0')}`);allVals.push(Math.round(d[w]));}
+    for(let w=0;w<52;w++){allWeeks.push(`${yr}-W${String(w+1).padStart(2,'0')}`);allVals.push(d?Math.round(d[w]||0):0);}
   });
   mkChart('chartTS',{
     type:'line',
@@ -1733,7 +1783,7 @@ function initEDA() {
   const palette=['#00aaff','#00d2c8','#e63946','#f4b942','#2ecc71','#8b5cf6','#f97316','#ec4899','#84cc16'];
   mkChart('chartYearOverlay',{
     type:'line',
-    data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets:years.map((yr,i)=>({label:String(yr),data:getWeeklyTotals(yr).map(v=>Math.round(v)),borderColor:palette[i],backgroundColor:'transparent',borderWidth:yr===2020?2.5:1.2,pointRadius:0,tension:0.3}))},
+    data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets:years.map((yr,i)=>{const d=getWeeklyTotals(yr);return{label:String(yr),data:d?d.map(v=>Math.round(v||0)):Array(52).fill(0),borderColor:palette[i],backgroundColor:'transparent',borderWidth:yr===2020?2.5:1.2,pointRadius:0,tension:0.3};})},
     options:{scales:{x:{ticks:{maxTicksLimit:13,font:{size:10}}},y:{title:{display:true,text:'Total Kasus per Minggu',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12,padding:6}}},interaction:{mode:'index',intersect:false}}
   });
   const kabs=['Jakarta Timur','Jakarta Selatan','Jakarta Utara','Jakarta Barat','Jakarta Pusat','Kepulauan Seribu'];
@@ -1965,22 +2015,35 @@ function getYearFromSel(){
 function updateMaps() {
   if(!map1) return;
   const year=getYearFromSel();
-  const week=parseInt(document.getElementById('week-slider')?.value||1);
+  const isForecast = (year === 2026);
+  const sl=document.getElementById('week-slider');
+  // Batasi slider: 2026 hanya minggu 1-13 (forecast), historis 1-52
+  if(sl) {
+    const maxWk = isForecast ? 13 : 52;
+    sl.max = maxWk;
+    if(parseInt(sl.value) > maxWk) sl.value = maxWk;
+    sl.style.setProperty('--pct',((parseInt(sl.value)-1)/(maxWk-1)*100)+'%');
+  }
+  const sliderRow = document.querySelector('.slider-row');
+  if(sliderRow) {
+    const maxWk = isForecast ? 13 : 52;
+    sliderRow.children[1].textContent = `Minggu ${maxWk}`;
+  }
+  const week=parseInt(sl?.value||1);
   document.getElementById('week-disp').textContent=`Minggu ${week}`;
   document.getElementById('peta-week-label').textContent=`Minggu ${week} · ${year}`;
-  const sl=document.getElementById('week-slider');
-  if(sl) sl.style.setProperty('--pct',((week-1)/51*100)+'%');
 
   const zoneData=KECAMATAN.map(k=>{
     const pred=getPred(k,year,week);
-    return {...k,pred,ewars:zonaEWARS(pred,k),ec:zonaEC(pred,k)};
+    const hasActual = !isForecast && pred !== null;
+    return {...k,pred,ewars:zonaEWARS(pred,k),ec:zonaEC(pred,k),hasActual};
   });
 
   if(geoLayer1){ geoLayer1.remove(); geoLayer1=null; }
   if(geoLayer2){ geoLayer2.remove(); geoLayer2=null; }
 
-  let ewarsCount={Merah:0,Kuning:0,Hijau:0};
-  let ecCount={Merah:0,Kuning:0,Hijau:0};
+  let ewarsCount={Merah:0,Kuning:0,Hijau:0,'No Data':0};
+  let ecCount={Merah:0,Kuning:0,Hijau:0,'No Data':0};
   const merahKec=[];
 
   // Build zone lookup by kec_id
@@ -1999,7 +2062,8 @@ function updateMaps() {
       zoneData.forEach(k=>{
         const zona = k[zoneKey];
         const color=ZCOLORS[zona]||'#888';
-        const radius=Math.max(500,Math.min(1400,350+k.pred*180));
+        const predVal = (k.pred !== null && k.pred !== undefined) ? k.pred : 0;
+        const radius=Math.max(500,Math.min(1400,350+predVal*180));
         const m=L.circle([k.lat,k.lng],{radius,fillColor:color,fillOpacity:0.55,color:color,weight:2})
           .addTo(map)
           .bindPopup(buildPopup(k));
@@ -2029,14 +2093,58 @@ function updateMaps() {
   }
 
   function buildPopup(k) {
-    return `<div class="popup-name">${k.name}</div><div style="font-size:10px;color:var(--txt3);margin-bottom:8px">${k.kab}</div><div class="popup-row"><span>Prediksi Kasus:</span><span class="popup-val">${k.pred.toFixed(2)}</span></div><div class="popup-row"><span>Zona EWARS:</span><span class="popup-val" style="color:${ZCOLORS[k.ewars]}">${k.ewars}</span></div><div class="popup-row"><span>Zona EC:</span><span class="popup-val" style="color:${ZCOLORS[k.ec]}">${k.ec}</span></div><div class="popup-row"><span>P50 / P75:</span><span class="popup-val">${k.P50.toFixed(1)} / ${k.P75.toFixed(1)}</span></div><div class="popup-row"><span>EC Mean ± SD:</span><span class="popup-val">${k.ecMean.toFixed(1)} ± ${k.ecSd.toFixed(1)}</span></div>`;
+    const isHistorical = (year !== 2026);
+    const kasusLabel = isHistorical ? 'Kasus Aktual' : 'Prediksi Kasus';
+    let kasusVal;
+    if(k.pred === null || k.pred === undefined) {
+      kasusVal = 'N/A';
+    } else if(isHistorical) {
+      kasusVal = Math.round(k.pred).toString() + ' kasus';
+    } else {
+      kasusVal = k.pred.toFixed(2) + ' kasus (prediksi)';
+    }
+    const sourceTag = isHistorical
+      ? `<div style="font-size:9px;color:#2ecc71;margin-bottom:6px">✔ Data Aktual dari historis_kec_weekly.json</div>`
+      : `<div style="font-size:9px;color:#00aaff;margin-bottom:6px">⚡ Forecast dari forecast_q1_2026.json</div>`;
+    return `<div class="popup-name">${k.name}</div><div style="font-size:10px;color:var(--txt3);margin-bottom:4px">${k.kab}</div>${sourceTag}<div class="popup-row"><span>${kasusLabel}:</span><span class="popup-val">${kasusVal}</span></div><div class="popup-row"><span>Zona EWARS:</span><span class="popup-val" style="color:${ZCOLORS[k.ewars]||'#888'}">${k.ewars}</span></div><div class="popup-row"><span>Zona EC:</span><span class="popup-val" style="color:${ZCOLORS[k.ec]||'#888'}">${k.ec}</span></div><div class="popup-row"><span>P50 / P75:</span><span class="popup-val">${k.P50.toFixed(1)} / ${k.P75.toFixed(1)}</span></div><div class="popup-row"><span>EC Mean ± SD:</span><span class="popup-val">${k.ecMean.toFixed(1)} ± ${k.ecSd.toFixed(1)}</span></div>`;
   }
 
   geoLayer1 = buildGeoLayer(map1, 'ewars');
   geoLayer2 = buildGeoLayer(map2, 'ec');
 
+  // Update mode label
+  const modeLabel1 = document.getElementById('map-mode-label-1');
+  const modeLabel2 = document.getElementById('map-mode-label-2');
+  if(modeLabel1) {
+    if(isForecast) {
+      modeLabel1.textContent = '⚡ Forecast Q1 2026 · Hijau ≤P50 · Kuning P50-P75 · Merah >P75';
+    } else if(!window._historisKecWeekly) {
+      modeLabel1.textContent = '⚠️ historis_kec_weekly.json belum tersedia – jalankan cell export historis_kec_weekly di notebook';
+    } else {
+      const hasData = zoneData.some(k => k.pred !== null);
+      modeLabel1.textContent = hasData
+        ? `📊 Data Aktual ${year} · Zonasi berdasarkan kasus aktual · Hijau ≤P50 · Kuning P50-P75 · Merah >P75`
+        : `⚠️ Tidak ada data aktual tersedia untuk tahun ${year}`;
+    }
+  }
+  if(modeLabel2) {
+    if(isForecast) {
+      modeLabel2.textContent = '⚡ Forecast Q1 2026 · Hijau ≤Mean · Kuning Mean-Mean+SD · Merah >Mean+SD';
+    } else if(!window._historisKecWeekly) {
+      modeLabel2.textContent = '⚠️ historis_kec_weekly.json belum tersedia';
+    } else {
+      const hasData = zoneData.some(k => k.pred !== null);
+      modeLabel2.textContent = hasData
+        ? `📊 Data Aktual ${year} · Zonasi berdasarkan kasus aktual · Hijau ≤Mean · Kuning Mean-Mean+SD · Merah >Mean+SD`
+        : `⚠️ Tidak ada data aktual tersedia untuk tahun ${year}`;
+    }
+  }
+
   document.getElementById('ewars-merah-count').textContent=`Merah: ${ewarsCount.Merah}`;
   document.getElementById('ec-merah-count').textContent=`Merah: ${ecCount.Merah}`;
+
+  const colHdr = document.getElementById('tbl-kasus-col-hdr');
+  if(colHdr) colHdr.textContent = isForecast ? 'Prediksi Kasus' : 'Kasus Aktual';
 
   const total=KECAMATAN.length;
   [['m','Merah'],['k','Kuning'],['h','Hijau']].forEach(([t,z])=>{
@@ -2060,7 +2168,8 @@ function updateMaps() {
 
 function onWeekSlide(el) {
   const v=parseInt(el.value);
-  el.style.setProperty('--pct',((v-1)/51*100)+'%');
+  const maxWk=parseInt(el.max)||52;
+  el.style.setProperty('--pct',((v-1)/(maxWk-1)*100)+'%');
   updateMaps();
 }
 
@@ -2072,8 +2181,10 @@ function togglePlay() {
     const speed=parseInt(document.getElementById('speed-sel').value||700);
     playInterval=setInterval(()=>{
       const sl=document.getElementById('week-slider');
+      const isFc=(getYearFromSel()===2026);
+      const maxWk=isFc?13:52;
       let v=parseInt(sl.value)+1;
-      if(v>52) v=1;
+      if(v>maxWk) v=1;
       sl.value=v;
       onWeekSlide(sl);
     }, speed);
@@ -2190,9 +2301,12 @@ function runKecSim() {
   const week=parseInt(document.getElementById('sim-week')?.value||6);
   const kec=KEC_MAP[kecId]||KECAMATAN[0];
   const pred=getPred(kec,year,week);
+  const yr=parseInt(year);
+  const isHistorical=(yr!==2026);
+  const kasusLabel=isHistorical?'Kasus Aktual':'Prediksi Kasus';
   const ze=zonaEWARS(pred,kec);
   const ec=zonaEC(pred,kec);
-  document.getElementById('sim-pred-val').textContent=pred.toFixed(2);
+  document.getElementById('sim-pred-val').textContent=(pred!==null?pred.toFixed(2):'N/A');
   document.getElementById('sim-ewars-zone').textContent=ze;
   document.getElementById('sim-ec-zone').textContent=ec;
   const zCol={Merah:'var(--z-merah)',Kuning:'var(--z-kuning)',Hijau:'var(--z-hijau)'};
@@ -2202,10 +2316,34 @@ function runKecSim() {
   document.getElementById('sim-ec-zone').style.color=zCol[ec];
   document.getElementById('sim-kec-info').innerHTML=`<strong>${kec.name}</strong> · ${kec.kab}<br>P50 = ${kec.P50.toFixed(1)} · P75 = ${kec.P75.toFixed(1)}<br>EC Mean = ${kec.ecMean.toFixed(1)} ± ${kec.ecSd.toFixed(1)}<br>Tahun ${year} · Minggu ${week}`;
   const profileData=Array.from({length:52},(_,i)=>getPred(kec,year,i+1));
-  const histAvg=Array.from({length:52},(_,i)=>kec.base*seasonal(i+1));
+  // Rata-rata historis dari data aktual (kecamatan_annual) bukan formula
+  let histAvg=null;
+  if(window._kecamatanAnnual && window._kecamatanAnnual[kec.id]) {
+    const ann=window._kecamatanAnnual[kec.id];
+    if(ann.avg_per_week!=null) {
+      // Gunakan rata-rata mingguan aktual per kecamatan dari semua tahun
+      // Pakai seasonal pattern dari data historis_weekly jika tersedia
+      histAvg=Array.from({length:52},(_,i)=>{
+        if(window._historisWeekly) {
+          const years=Object.keys(window._historisWeekly).filter(y=>parseInt(y)<2026);
+          if(years.length>0) {
+            const vals=years.map(y=>{const arr=window._historisWeekly[y];return arr&&arr[i]!=null?arr[i]:null;}).filter(v=>v!==null);
+            if(vals.length>0) {
+              const avg=vals.reduce((s,v)=>s+v,0)/vals.length;
+              const nKec=KECAMATAN.length||44;
+              return +(avg/nKec).toFixed(2);
+            }
+          }
+        }
+        return +(ann.avg_per_week).toFixed(2);
+      });
+    }
+  }
+  const datasets=[{label:`${year} ${isHistorical?'Aktual':'Prediksi'}`,data:profileData.map(v=>v!==null?+v.toFixed(2):null),borderColor:'rgba(0,170,255,1)',backgroundColor:'rgba(0,170,255,0.1)',borderWidth:2,pointRadius:0,fill:true,tension:0.3,spanGaps:false}];
+  if(histAvg) datasets.push({label:'Rata-rata Historis (Aktual)',data:histAvg,borderColor:'rgba(244,185,66,0.7)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,3],tension:0.3});
   mkChart('chartSimProfile',{
     type:'line',
-    data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets:[{label:`${year} Prediksi`,data:profileData.map(v=>+v.toFixed(2)),borderColor:'rgba(0,170,255,1)',backgroundColor:'rgba(0,170,255,0.1)',borderWidth:2,pointRadius:0,fill:true,tension:0.3},{label:'Rata-rata Historis',data:histAvg.map(v=>+v.toFixed(2)),borderColor:'rgba(244,185,66,0.7)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,3],tension:0.3}]},
+    data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets},
     options:{scales:{x:{ticks:{maxTicksLimit:13}},y:{title:{display:true,text:'Kasus per Minggu',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
   });
 }
@@ -2261,7 +2399,7 @@ function runYearSim() {
   const palette=['#6fa8d0','#00aaff','#00d2c8','#e63946','#f4b942','#2ecc71','#8b5cf6','#f97316','#ec4899','#ff4444'];
   mkChart('chartYearSim',{
     type:'line',
-    data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets:years.map((yr,i)=>({label:String(yr)+(yr===2026?' (Forecast)':''),data:Array.from({length:52},(_,w)=>+getPred(kec,yr,w+1).toFixed(2)),borderColor:palette[i],backgroundColor:'transparent',borderWidth:yr===2026?2.5:1.2,borderDash:yr===2026?[5,3]:[],pointRadius:0,tension:0.3}))},
+    data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets:years.map((yr,i)=>({label:String(yr)+(yr===2026?' (Forecast)':''),data:Array.from({length:52},(_,w)=>+getPredSafe(kec,yr,w+1).toFixed(2)),borderColor:palette[i],backgroundColor:'transparent',borderWidth:yr===2026?2.5:1.2,borderDash:yr===2026?[5,3]:[],pointRadius:0,tension:0.3}))},
     options:{scales:{x:{ticks:{maxTicksLimit:13}},y:{title:{display:true,text:'Kasus per Minggu',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12,padding:5}}}}
   });
 }
@@ -2392,6 +2530,7 @@ async function loadAllData() {
     fetch(`${BASE}/model_metrics.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/feature_importance.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/historis_weekly.json`).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch(`${BASE}/historis_kec_weekly.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/q1_2026_summary.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/cv_fold_results.json`).then(r=>r.ok?r.json():null).catch(()=>null),
     fetch(`${BASE}/eda_stats.json`).then(r=>r.ok?r.json():null).catch(()=>null),
@@ -2400,7 +2539,7 @@ async function loadAllData() {
     fetch(`${BASE}/kecamatan_annual.json`).then(r=>r.ok?r.json():null).catch(()=>null),
   ]);
 
-  const [kecRes, fcRes, geoRes, mdlRes, shapRes, histRes, q1Res, foldRes, edaRes, scatterRes, spearmanRes, kecAnnualRes] = results;
+  const [kecRes, fcRes, geoRes, mdlRes, shapRes, histRes, histKecRes, q1Res, foldRes, edaRes, scatterRes, spearmanRes, kecAnnualRes] = results;
 
   if(kecRes.status === 'fulfilled') {
     KECAMATAN = kecRes.value;
@@ -2414,14 +2553,8 @@ async function loadAllData() {
     FC2026 = fcRes.value;
     console.log('[SIPEDA] Loaded forecast_q1_2026.json');
   } else {
-    console.warn('[SIPEDA] Gagal memuat forecast_q1_2026.json – hitung ulang dari formula');
-    KECAMATAN.forEach(kec=>{
-      FC2026[kec.id]=[];
-      for(let w=1;w<=13;w++){
-        const p=getPredFormula(kec,2026,w);
-        FC2026[kec.id].push({week:w,pred:p,ewars:zonaEWARS(p,kec),ec:zonaEC(p,kec)});
-      }
-    });
+    console.warn('[SIPEDA] Gagal memuat forecast_q1_2026.json – FC2026 kosong, peta 2026 tampil No Data');
+    FC2026 = {};
   }
 
   if(geoRes.status === 'fulfilled') {
@@ -2460,6 +2593,13 @@ async function loadAllData() {
     console.log('[SIPEDA] Loaded historis_weekly.json');
   }
 
+  if(histKecRes.status === 'fulfilled' && histKecRes.value) {
+    window._historisKecWeekly = histKecRes.value;
+    console.log('[SIPEDA] Loaded historis_kec_weekly.json:', Object.keys(histKecRes.value).length, 'kecamatan');
+  } else {
+    console.warn('[SIPEDA] historis_kec_weekly.json tidak tersedia – peta historis mungkin tidak akurat');
+  }
+
   if(q1Res.status === 'fulfilled' && q1Res.value) {
     window._q1Summary = q1Res.value;
     console.log('[SIPEDA] Loaded q1_2026_summary.json');
@@ -2492,16 +2632,6 @@ async function loadAllData() {
 
   KEC_MAP = {};
   KECAMATAN.forEach(k => KEC_MAP[k.id] = k);
-
-  KECAMATAN.forEach(kec=>{
-    if(!FC2026[kec.id]) {
-      FC2026[kec.id]=[];
-      for(let w=1;w<=13;w++){
-        const p=getPredFormula(kec,2026,w);
-        FC2026[kec.id].push({week:w,pred:p,ewars:zonaEWARS(p,kec),ec:zonaEC(p,kec)});
-      }
-    }
-  });
 
   // Update ticker dengan data nyata setelah load
   updateTicker();
