@@ -122,7 +122,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);min-
 .tick-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 3px currentColor;opacity:0.9;}
 
 /* MAIN */
-.main{margin-top:142px;min-height:calc(100vh - 142px);padding:26px;max-width:1600px;margin-left:auto;margin-right:auto;padding-top:26px;}
+.main{margin-top:142px;min-height:calc(100vh - 142px);padding:26px;max-width:1600px;margin-left:auto;margin-right:auto;padding-top:26px;container-type:inline-size;container-name:main;}
 .page{display:none;}
 .page.active{display:block;animation:pg-in .45s cubic-bezier(.16,1,.3,1);}
 @keyframes pg-in{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
@@ -134,8 +134,8 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);min-
 .g-7-3{display:grid;grid-template-columns:7fr 3fr;gap:18px;}
 .g-3-7{display:grid;grid-template-columns:3fr 7fr;gap:18px;}
 .g-5-5{display:grid;grid-template-columns:5fr 5fr;gap:0;}
-@media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr);}.g-7-3,.g-3-7{grid-template-columns:1fr;}}
-@media(max-width:750px){.g2,.g3{grid-template-columns:1fr;}.g-5-5{grid-template-columns:1fr;}}
+@container main (max-width:1100px){.g4{grid-template-columns:repeat(2,1fr);}.g-7-3,.g-3-7{grid-template-columns:1fr;}.model-compare-grid{grid-template-columns:repeat(3,1fr);}}
+@container main (max-width:750px){.g2,.g3{grid-template-columns:1fr;}.g-5-5{grid-template-columns:1fr;}}
 
 /* CARD SYSTEM — elevated, accented, "timbul" surfaces */
 .card{--accent:var(--c-blue);background:var(--card);border:1px solid var(--bord);border-radius:var(--radius-card);padding:20px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);isolation:isolate;}
@@ -244,13 +244,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bor
 .tag-teal{background:rgba(12,147,171,0.1);color:var(--c-teal);border:1px solid rgba(12,147,171,0.28);}
 
 /* HERO */
-.hero{border:1px solid var(--bord);border-radius:26px;padding:36px 36px 30px;position:relative;overflow:hidden;margin-bottom:22px;background:linear-gradient(160deg,var(--card) 0%,var(--bg3) 130%);box-shadow:var(--shadow-card);}
+.hero{border:1px solid var(--bord);border-radius:26px;padding:36px 36px 30px;position:relative;overflow:hidden;margin-bottom:22px;background:linear-gradient(160deg,var(--card) 0%,var(--bg3) 130%);box-shadow:var(--shadow-card);container-type:inline-size;container-name:hero;}
 .hero-glow1{position:absolute;top:-90px;right:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(79,70,229,0.14),transparent 70%);pointer-events:none;animation:float-glow 6s ease-in-out infinite;}
 .hero-glow2{position:absolute;bottom:-70px;left:30%;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(251,78,106,0.12),transparent 70%);pointer-events:none;animation:float-glow 8s ease-in-out infinite reverse;}
 @keyframes float-glow{0%,100%{transform:translate(0,0);}50%{transform:translate(12px,-16px);}}
-.hero-inner{display:grid;grid-template-columns:1fr 400px auto;gap:14px;align-items:center;position:relative;z-index:1;}
-@media(max-width:1200px){.hero-inner{grid-template-columns:1fr auto;}}
-.hero-mid{display:flex;justify-content:flex-start;align-items:center;margin-left:-70px;padding-top:28px;}@media(max-width:1200px){.hero-mid{display:none;}}
+.hero-inner{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:14px;align-items:center;position:relative;z-index:1;}
+.hero-mid{display:flex;justify-content:flex-start;align-items:center;margin-left:clamp(-70px,calc(78px - 16.3cqi),0px);padding-top:clamp(8px,3cqi,28px);transition:margin-left .25s ease,padding-top .25s ease,opacity .25s ease;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:7px;margin-bottom:14px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--c-blue),var(--c-purple));padding:6px 13px;border-radius:20px;box-shadow:0 8px 18px -6px rgba(79,70,229,0.45);}
 .hero-title{font-family:'Sora',sans-serif;font-size:36px;font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:16px;background:linear-gradient(135deg,var(--txt) 0%,var(--c-blue) 45%,var(--c-red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .hero-desc{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:22px;max-width:560px;}
@@ -263,12 +262,32 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bor
 .hstat:nth-child(5)::before{background:linear-gradient(180deg,var(--c-green),var(--c-teal));}
 .hstat-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--c-blue),var(--c-red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .hstat-label{font-size:11px;color:var(--txt3);font-weight:700;text-transform:uppercase;letter-spacing:0.6px;margin-top:3px;}
-.hero-chart{width:280px;min-width:240px;background:var(--bg2);border:1px solid var(--bord);border-radius:18px;padding:16px;box-shadow:var(--shadow-xs);}
+.hero-chart{width:clamp(200px,calc(142px + 15.24cqi),280px);background:var(--bg2);border:1px solid var(--bord);border-radius:18px;padding:16px;box-shadow:var(--shadow-xs);transition:width .25s ease;}
 .hero-chart-title{font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
 
 /* JAKARTA HERO MAP */
-.hero-jkt-wrap{position:relative;width:380px;height:285px;flex-shrink:0;margin:0 auto;filter:drop-shadow(0 18px 30px rgba(20,24,52,0.12));}
+.hero-jkt-wrap{position:relative;width:clamp(200px,42cqi,380px);aspect-ratio:4/3;flex-shrink:0;margin:0 auto;filter:drop-shadow(0 18px 30px rgba(20,24,52,0.12));transition:width .25s ease;}
 .hero-jkt-wrap svg#jkt-map{width:100%;height:100%;}
+
+/* Degradasi BENAR-BENAR menyatu (fluid via clamp+cqi), berbasis lebar ruang
+   yang sungguh tersedia (container query), bukan lebar viewport — karena
+   sidebar bisa mengambil 260px atau 68px, dua laptop dengan resolusi
+   sedikit berbeda bisa berakhir di ruang yang nyaris sama, atau
+   sebaliknya. Peta & chart donat di atas (.hero-jkt-wrap, .hero-chart)
+   sudah mengecil terus-menerus secara halus sepanjang rentang lebar yang
+   luas (lihat clamp(...,cqi,...) di rule masing-masing) — bukan cuma
+   melompat di satu titik patokan seperti sebelumnya — supaya tidak ada
+   titik di mana selisih lebar layar yang kecil membuat elemen tiba-tiba
+   "hilang". Peta baru benar-benar disembunyikan di rentang yang sangat
+   sempit, setelah ia mencapai ukuran minimumnya, dan didahului fase
+   transparan dulu (bertahap) supaya tidak melompat ke kosong begitu saja. */
+@container hero (max-width:480px){
+  .hero-mid{opacity:0.35;}
+}
+@container hero (max-width:460px){
+  .hero-mid{display:none;}
+  .hero-inner{grid-template-columns:minmax(220px,1fr) auto;}
+}
 .jkt-pulse-ring{transform-origin:center;animation:jkt-ring-out 2.4s ease-out infinite;}
 @keyframes jkt-ring-out{0%{transform:scale(0.2);opacity:0.9;}100%{transform:scale(2.5);opacity:0;}}
 .jkt-label-box{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;fill:var(--txt3);}
@@ -290,7 +309,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bor
 .flow-number{position:absolute;top:-6px;right:-6px;width:17px;height:17px;border-radius:50%;background:var(--txt);font-size:9px;font-weight:800;color:var(--bg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(20,24,52,0.3);}
 
 /* ZONE CARDS */
-.zone-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px;}
+.zone-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-bottom:22px;}
 .zone-card{border-radius:18px;padding:22px;border:1px solid;position:relative;overflow:hidden;background:var(--card);box-shadow:var(--shadow-card);}
 .zone-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-card-hover);}
 .zone-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
@@ -451,8 +470,6 @@ canvas{max-width:100%;}
   .main{padding:16px;margin-top:138px;}
 
   .hero{padding:22px;border-radius:18px;}
-  .hero-inner{grid-template-columns:1fr!important;}
-  .hero-chart{width:100%;min-width:auto;margin-top:16px;}
   .hero-title{font-size:25px;}
   .hero-desc{font-size:13px;}
   .hero-stats{gap:12px;}
@@ -460,7 +477,6 @@ canvas{max-width:100%;}
   .hstat-val{font-size:18px;}
   .hstat-label{font-size:10px;}
 
-  .zone-cards{grid-template-columns:1fr;}
   .zone-card{padding:18px;}
   .zone-card-icon{font-size:26px;}
   .zone-card-name{font-size:15px;}
@@ -527,9 +543,11 @@ canvas{max-width:100%;}
   .hero-stats{flex-direction:column;gap:10px;align-items:stretch;}
   .hstat{text-align:center;}
   .hstat-val{font-size:20px;}
-  .hero-chart{padding:13px;margin-left:auto;margin-right:auto;}
+  .hero-chart{width:100%;padding:13px;margin-left:auto;margin-right:auto;}
   .hero-chart-title{font-size:10px;text-align:center;}
 
+  .hero-inner{grid-template-columns:1fr!important;}
+  .hero-mid{display:flex;justify-content:center;margin-left:0;padding-top:0;opacity:1;}
   .hero-jkt-wrap{width:100%;height:200px;margin-top:16px;margin-left:auto;margin-right:auto;}
 
   .g1,.g2,.g3,.g4,.g-7-3,.g-3-7,.g-5-5{grid-template-columns:1fr!important;gap:13px;}
@@ -931,6 +949,13 @@ canvas{max-width:100%;}
   height: 1px;
   background: var(--bord);
 }
+.sb-w-caption {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--txt3);
+  line-height: 1.5;
+  margin: -4px 0 10px;
+}
 .sb-stat-row {
   display: flex;
   justify-content: space-between;
@@ -1313,7 +1338,8 @@ body.sb-collapsed .main {
 
     <!-- Zona Stats -->
     <div class="sb-widget">
-      <div class="sb-w-title">Zona Kecamatan</div>
+      <div class="sb-w-title">Zona Kecamatan · Total</div>
+      <div class="sb-w-caption" id="sb-zona-caption">Akumulasi seluruh kecamatan &amp; minggu, forecast Q1 2026</div>
       <div class="sb-stat-row">
         <span class="sb-stat-label">🔴 Merah (&gt;P75)</span>
         <span class="sb-stat-val" style="color:var(--z-merah)" id="sb-merah-cnt">18</span>
@@ -1797,7 +1823,7 @@ body.sb-collapsed .main {
   <div class="tbl-wrap mb24">
     <div class="tbl-hrow"><span class="tbl-htitle">Metrik Evaluasi per Model - Rata-rata 3 Fold CV</span></div>
     <div class="tbl-scroll"><table>
-      <thead><tr><th>Model</th><th>R2</th><th>MAE</th><th>RMSE</th><th>MAPE (%)</th><th>Status</th></tr></thead>
+      <thead><tr><th>Model</th><th>R2</th><th>MAE</th><th>RMSE</th><th>Status</th></tr></thead>
       <tbody id="tbl-model-metrics"></tbody>
     </table></div>
   </div>
@@ -1941,12 +1967,11 @@ body.sb-collapsed .main {
 <div class="page" id="page-simulasi">
   <div class="info-box mb16">
     <div class="info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M9 3h6m-5 0v6l-5 9a1 1 0 0 0 .9 1.5h10.2A1 1 0 0 0 21 18l-5-9V3"/><path d="M6 17h12"/></svg></div>
-    <div><strong>Simulator Prediksi Interaktif</strong> - Eksplorasi bagaimana pilihan kecamatan, minggu, tahun, dan perbedaan model memengaruhi prediksi kasus DBD. Semua hasil merupakan perkiraan berbasis hubungan statistik model ML SIPEDA.</div>
+    <div><strong>Simulator Prediksi Interaktif</strong> - Eksplorasi bagaimana pilihan kecamatan, minggu, dan tahun memengaruhi prediksi kasus DBD. Semua hasil merupakan perkiraan berbasis hubungan statistik model ML SIPEDA.</div>
   </div>
   <div class="sim-tabs">
     <div class="sim-tab active" onclick="switchSimTab(0,this)">Kecamatan dan Minggu</div>
     <div class="sim-tab" onclick="switchSimTab(1,this)">Perbandingan Tahun</div>
-    <div class="sim-tab" onclick="switchSimTab(2,this)">Perbandingan Model</div>
   </div>
 
   <!-- Pane 0 -->
@@ -1995,39 +2020,6 @@ body.sb-collapsed .main {
       <div class="card-title">Perbandingan Pola Mingguan Antar Tahun</div>
       <div class="card-subtitle">Kasus prediksi vs aktual per minggu untuk setiap tahun. Tahun 2026 merupakan forecast model akhir.</div>
       <div class="ch-320"><canvas id="chartYearSim"></canvas></div>
-    </div>
-  </div>
-
-  <!-- Pane 2 -->
-  <div class="sim-pane" id="simpane-2">
-    <div class="info-box mb16" style="background:rgba(139,92,246,0.05);border-color:rgba(139,92,246,0.18)">
-      <div class="info-icon" style="color:var(--c-purple)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect x="9" y="9" width="6" height="6" rx="1"/><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></div>
-      <div><strong>Perbandingan 5 Model ML</strong> - Lihat bagaimana setiap model memberikan prediksi berbeda untuk kecamatan dan minggu yang sama. LightGBM Tweedie dipilih sebagai model terbaik dengan R²=0.77 dan MAE=2.95.</div>
-    </div>
-    <div class="g2 mb16">
-      <div class="card">
-        <div class="card-title" style="margin-bottom:12px">Pilih Kecamatan dan Minggu</div>
-        <div class="ctrl-row" style="margin-bottom:14px">
-          <select class="ctrl-sel" id="sim-kec-mdl" style="flex:1" onchange="runModelSim()"></select>
-          <select class="ctrl-sel" id="sim-week-mdl" onchange="runModelSim()"></select>
-        </div>
-        <div class="card-title" style="margin-bottom:4px;font-size:13px">Prediksi per Model</div>
-        <div class="card-subtitle" style="margin-bottom:12px">Setiap model menghasilkan prediksi berbeda berdasarkan arsitektur dan hyperparameter masing-masing.</div>
-        <div id="model-pred-bars" style="margin-top:12px"></div>
-        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--bord);font-size:11px;color:var(--txt3);line-height:1.6">
-          <strong style="color:var(--c-blue)">LightGBM Tweedie</strong> dipilih karena performa terbaik pada rolling CV dan kemampuan menangani distribusi count data yang over-dispersed.
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Distribusi Prediksi - Semua Model</div>
-        <div class="card-subtitle">Perbandingan visual prediksi dari 5 model kandidat untuk kecamatan dan minggu terpilih.</div>
-        <div class="ch-260"><canvas id="chartModelComp"></canvas></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Ringkasan Performa Model</div>
-      <div class="card-subtitle" style="margin-bottom:14px">Metrik evaluasi rata-rata dari 3-fold rolling window cross-validation (2023, 2024, 2025).</div>
-      <div class="model-compare-grid" id="model-sim-cards"></div>
     </div>
   </div>
 </div>
@@ -2179,11 +2171,11 @@ const KECAMATAN_DEMO = [
 let KEC_MAP = {};
 const YEAR_EFF = {2017:1.0,2018:1.08,2019:0.92,2020:1.38,2021:0.85,2022:0.93,2023:1.04,2024:1.12,2025:1.00,2026:1.16};
 const MODELS = [
-  {name:'Naive Baseline',key:'naive',R2:0.69,MAE:3.40,RMSE:4.95,MAPE:128,best:false},
-  {name:'Poisson Ridge',key:'poisson',R2:0.57,MAE:3.89,RMSE:5.75,MAPE:104,best:false},
-  {name:'XGBoost',key:'xgb',R2:0.76,MAE:3.01,RMSE:4.29,MAPE:70,best:false},
-  {name:'LightGBM',key:'lgb',R2:0.77,MAE:2.95,RMSE:4.20,MAPE:63,best:true},
-  {name:'CatBoost',key:'cat',R2:0.76,MAE:2.92,RMSE:4.22,MAPE:66,best:false},
+  {name:'Naive Baseline',key:'naive',R2:0.69,MAE:3.40,RMSE:4.95,best:false},
+  {name:'Poisson Ridge',key:'poisson',R2:0.57,MAE:3.89,RMSE:5.75,best:false},
+  {name:'XGBoost',key:'xgb',R2:0.76,MAE:3.01,RMSE:4.29,best:false},
+  {name:'LightGBM',key:'lgb',R2:0.77,MAE:2.95,RMSE:4.20,best:true},
+  {name:'CatBoost',key:'cat',R2:0.76,MAE:2.92,RMSE:4.22,best:false},
 ];
 const SHAP_FEATS = [
   {name:'kasus DBD lag1',val:0.89},{name:'kasus DBD lag2',val:0.67},
@@ -2531,13 +2523,13 @@ function initEDA() {
 function initModel() {
   const mc = document.getElementById('model-cards');
   MODELS.forEach(m=>{
-    mc.innerHTML+=`<div class="model-crd${m.best?' best':''}"><div class="model-crd-name">${m.name}</div><div class="model-crd-r2">${(m.R2||0).toFixed(2)}</div><div class="model-crd-mae">MAE ${(m.MAE||0).toFixed(2)}</div><div style="margin-top:8px;font-size:9.5px;color:var(--txt3)">RMSE ${(m.RMSE||0).toFixed(2)} · MAPE ${m.MAPE||0}%</div></div>`;
+    mc.innerHTML+=`<div class="model-crd${m.best?' best':''}"><div class="model-crd-name">${m.name}</div><div class="model-crd-r2">${(m.R2||0).toFixed(2)}</div><div class="model-crd-mae">MAE ${(m.MAE||0).toFixed(2)}</div><div style="margin-top:8px;font-size:9.5px;color:var(--txt3)">RMSE ${(m.RMSE||0).toFixed(2)}</div></div>`;
   });
   mkChart('chartRadar',{
     type:'radar',
     data:{
-      labels:['R²','Akurasi MAE','Akurasi RMSE','Akurasi MAPE','Kecepatan'],
-      datasets:MODELS.map((m,i)=>({label:m.name,data:[m.R2||0,1-(m.MAE||0)/4,1-(m.RMSE||0)/6,1-(m.MAPE||0)/130,i===0?0.7:i===1?0.9:0.5],borderColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'1)',backgroundColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'0.08)',pointRadius:3,borderWidth:m.best?2.5:1.5}))
+      labels:['R²','Akurasi MAE','Akurasi RMSE','Kecepatan'],
+      datasets:MODELS.map((m,i)=>({label:m.name,data:[m.R2||0,1-(m.MAE||0)/4,1-(m.RMSE||0)/6,i===0?0.7:i===1?0.9:0.5],borderColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'1)',backgroundColor:[C.blue,C.teal,C.amber,C.green,C.purple][i%5]+'0.08)',pointRadius:3,borderWidth:m.best?2.5:1.5}))
     },
     options:{scales:{r:{min:0,max:1,ticks:{stepSize:0.2,font:{size:9}},pointLabels:{font:{size:10.5},color:'#6fa8d0'}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}}}
   });
@@ -2606,7 +2598,7 @@ function initModel() {
   // Tabel metrik model
   const tmb = document.getElementById('tbl-model-metrics');
   MODELS.forEach(m=>{
-    tmb.innerHTML+=`<tr><td><strong>${m.name}</strong>${m.best?` <span class="best-badge">TERBAIK</span>`:''}</td><td class="mono" style="color:${m.best?'var(--c-blue)':'var(--txt2)'}">${(m.R2||0).toFixed(3)}</td><td class="mono">${(m.MAE||0).toFixed(3)}</td><td class="mono">${(m.RMSE||0).toFixed(3)}</td><td class="mono">${m.MAPE||0}%</td><td>${m.best?'<span class="zpill zpill-h">Dipilih</span>':'<span class="tag tag-blue" style="font-size:9px">Kandidat</span>'}</td></tr>`;
+    tmb.innerHTML+=`<tr><td><strong>${m.name}</strong>${m.best?` <span class="best-badge">TERBAIK</span>`:''}</td><td class="mono" style="color:${m.best?'var(--c-blue)':'var(--txt2)'}">${(m.R2||0).toFixed(3)}</td><td class="mono">${(m.MAE||0).toFixed(3)}</td><td class="mono">${(m.RMSE||0).toFixed(3)}</td><td>${m.best?'<span class="zpill zpill-h">Dipilih</span>':'<span class="tag tag-blue" style="font-size:9px">Kandidat</span>'}</td></tr>`;
   });
 }
 
@@ -2935,17 +2927,12 @@ function selectFcWeek(w, el) {
 
 /* PAGE: SIMULASI */
 function initSimulasi() {
-  ['sim-kec','sim-kec-yr','sim-kec-mdl'].forEach(id=>{
+  ['sim-kec','sim-kec-yr'].forEach(id=>{
     const sel=document.getElementById(id);
     if(!sel) return;
     KECAMATAN.forEach(k=>{sel.innerHTML+=`<option value="${k.id}">${k.name} (${k.kab.replace('Jakarta ','')})</option>`;});
   });
-  ['sim-week-mdl'].forEach(id=>{
-    const sel=document.getElementById(id);
-    if(!sel) return;
-    for(let w=1;w<=52;w++) sel.innerHTML+=`<option value="${w}"${w===6?' selected':''}>Minggu ${w}</option>`;
-  });
-  runKecSim(); runYearSim(); runModelSim();
+  runKecSim(); runYearSim();
 }
 
 function switchSimTab(idx, el) {
@@ -3023,69 +3010,6 @@ function runYearSim() {
     type:'line',
     data:{labels:Array.from({length:52},(_,i)=>`W${i+1}`),datasets:years.map((yr,i)=>({label:String(yr)+(yr===2026?' (Forecast)':''),data:Array.from({length:52},(_,w)=>+getPredSafe(kec,yr,w+1).toFixed(2)),borderColor:palette[i],backgroundColor:'transparent',borderWidth:yr===2026?2.5:1.2,borderDash:yr===2026?[5,3]:[],pointRadius:0,tension:0.3}))},
     options:{scales:{x:{ticks:{maxTicksLimit:13}},y:{title:{display:true,text:'Kasus per Minggu',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12,padding:5}}}}
-  });
-}
-
-function normalizeModelKey(key) {
-  if(!key) return 'lgb';
-  const k = key.toLowerCase().replace(/-/g,'_');
-  if(k.includes('naive') || k.includes('baseline')) return 'naive';
-  if(k.includes('poisson') || k.includes('ridge')) return 'poisson';
-  if(k.includes('xgb') || k.includes('xgboost')) return 'xgb';
-  if(k.includes('lgb') || k.includes('lightgbm') || k.includes('light_gbm')) return 'lgb';
-  if(k.includes('cat') || k.includes('catboost')) return 'cat';
-  return k;
-}
-
-function runModelSim() {
-  const kecId=document.getElementById('sim-kec-mdl')?.value||KECAMATAN[0]?.id;
-  const week=parseInt(document.getElementById('sim-week-mdl')?.value||6);
-  if(!kecId || !KEC_MAP[kecId]) return;
-  const kec=KEC_MAP[kecId]||KECAMATAN[0];
-  const basePred=getPred(kec,'2026',week);
-  
-  // Model predictions dengan faktor realistis berdasarkan performa masing-masing
-  const modelPreds={
-    naive: Math.max(0, basePred * 0.65 + seededRand(week*7) * 2.5), // Underfitting
-    poisson: Math.max(0, basePred * 0.82 + seededRand(week*13) * 1.5), // Moderate
-    xgb: Math.max(0, basePred * 0.95 + seededRand(week*17) * 0.9), // Good
-    lgb: basePred, // Best - LightGBM sebagai referensi
-    cat: Math.max(0, basePred * 0.97 + seededRand(week*23) * 0.8) // Very Good
-  };
-  
-  const bars=document.getElementById('model-pred-bars');
-  if(!bars) return;
-  bars.innerHTML='';
-  const maxV=Math.max(...Object.values(modelPreds));
-  MODELS.forEach(m=>{
-    const normKey = normalizeModelKey(m.key);
-    const v = modelPreds[normKey] ?? basePred;
-    const pct=Math.round(v/Math.max(maxV,0.01)*100);
-    const barColor = m.best ? 'var(--c-blue)' : (m.R2||0) > 0.7 ? 'var(--c-teal)' : (m.R2||0) > 0.3 ? 'var(--z-kuning)' : 'var(--txt3)';
-    bars.innerHTML+=`<div class="metric-bar" style="margin-bottom:12px">
-      <div class="metric-name" style="min-width:120px">${m.name}${m.best?' <span class="best-badge" style="font-size:8px">BEST</span>':''}</div>
-      <div style="flex:1"><div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${barColor}"></div></div></div>
-      <div class="metric-val" style="color:${m.best?'var(--c-blue)':'var(--txt2)'};min-width:55px">${v.toFixed(2)}</div>
-    </div>`;
-  });
-  
-  // Populate model summary cards
-  const simCards = document.getElementById('model-sim-cards');
-  if(simCards && simCards.innerHTML === '') {
-    MODELS.forEach(m=>{
-      simCards.innerHTML+=`<div class="model-crd${m.best?' best':''}">
-        <div class="model-crd-name">${m.name}</div>
-        <div class="model-crd-r2">${(m.R2||0).toFixed(2)}</div>
-        <div class="model-crd-mae">MAE ${(m.MAE||0).toFixed(2)}</div>
-        <div style="margin-top:8px;font-size:9.5px;color:var(--txt3)">RMSE ${(m.RMSE||0).toFixed(2)}</div>
-      </div>`;
-    });
-  }
-  
-  mkChart('chartModelComp',{
-    type:'bar',
-    data:{labels:MODELS.map(m=>m.name),datasets:[{label:'Prediksi Kasus',data:MODELS.map(m=>+(modelPreds[normalizeModelKey(m.key)]??basePred).toFixed(2)),backgroundColor:MODELS.map(m=>m.best?'rgba(0,170,255,0.85)':(m.R2||0)>0.7?'rgba(0,210,200,0.7)':(m.R2||0)>0.3?'rgba(244,185,66,0.6)':'rgba(107,114,128,0.5)'),borderWidth:0,borderRadius:4}]},
-    options:{scales:{y:{title:{display:true,text:'Prediksi Kasus',color:'#6fa8d0',font:{size:10}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`${l.raw.toFixed(2)} kasus (${MODELS[l.dataIndex]?.name||''})`}}}}
   });
 }
 
@@ -3190,7 +3114,6 @@ async function loadAllData() {
         R2: m.R2,
         MAE: m.MAE,
         RMSE: m.RMSE,
-        MAPE: m.MAPE,
         best: m.best
       });
     });
@@ -3370,14 +3293,25 @@ function updateSidebarStats() {
     if (k) k.textContent = kuning;
     if (h) h.textContent = hijau;
 
-    // Bar diisi proporsional terhadap total kecamatan, biar representatif
-    const total = (KECAMATAN && KECAMATAN.length) ? KECAMATAN.length : (merah + kuning + hijau) || 44;
+    // Bar diisi proporsional terhadap total ketiga zona (merah+kuning+hijau),
+    // bukan terhadap jumlah kecamatan, supaya panjang bar selalu mencerminkan
+    // proporsi sebenarnya (merah+kuning+hijau = 100%)
+    const total = (merah + kuning + hijau) || 1;
     const mBar = document.getElementById('sb-merah-bar');
     const kBar = document.getElementById('sb-kuning-bar');
     const hBar = document.getElementById('sb-hijau-bar');
-    if (mBar) mBar.style.width = Math.min(100, (merah / total) * 100) + '%';
-    if (kBar) kBar.style.width = Math.min(100, (kuning / total) * 100) + '%';
-    if (hBar) hBar.style.width = Math.min(100, (hijau / total) * 100) + '%';
+    if (mBar) mBar.style.width = ((merah / total) * 100) + '%';
+    if (kBar) kBar.style.width = ((kuning / total) * 100) + '%';
+    if (hBar) hBar.style.width = ((hijau / total) * 100) + '%';
+
+    // Keterangan sumber angka: ini akumulasi kecamatan x minggu sepanjang
+    // seluruh forecast Q1 2026, bukan snapshot satu minggu saja
+    const capEl = document.getElementById('sb-zona-caption');
+    if (capEl) {
+      const nKec = (KECAMATAN && KECAMATAN.length) ? KECAMATAN.length : 44;
+      const nWeek = (q.weekly && q.weekly.length) ? q.weekly.length : (Math.round(total / nKec) || 13);
+      capEl.textContent = `Akumulasi ${nKec} kecamatan x ${nWeek} minggu - Total ${total.toLocaleString('id')}`;
+    }
   }
 }
 setTimeout(updateSidebarStats, 1500);
