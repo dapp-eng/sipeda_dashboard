@@ -990,25 +990,6 @@ canvas{max-width:100%;}
   transition: width 1.2s cubic-bezier(.16,1,.3,1);
 }
 
-/* Mini weather/climate widget */
-.sb-climate {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 4px;
-}
-.sb-climate-item {
-  flex: 1;
-  min-width: 54px;
-  background: var(--bg2);
-  border: 1px solid var(--bord);
-  border-radius: 8px;
-  padding: 6px 7px;
-  text-align: center;
-}
-.sb-climate-val { font-size: 13px; font-weight: 800; color: var(--c-blue); font-family: 'JetBrains Mono', monospace; }
-.sb-climate-lbl { font-size: 8.5px; color: var(--txt3); margin-top: 2px; }
-
 /* ── Sidebar footer ── */
 .sb-footer {
   padding: 10px 14px;
@@ -1338,40 +1319,21 @@ body.sb-collapsed .main {
         <span class="sb-stat-val" style="color:var(--z-merah)" id="sb-merah-cnt">18</span>
       </div>
       <div class="sb-ring">
-        <div class="sb-ring-bar"><div class="sb-ring-fill" style="width:41%;background:var(--z-merah)"></div></div>
+        <div class="sb-ring-bar"><div class="sb-ring-fill" id="sb-merah-bar" style="width:41%;background:var(--z-merah)"></div></div>
       </div>
       <div class="sb-stat-row" style="margin-top:8px">
         <span class="sb-stat-label">🟡 Kuning</span>
         <span class="sb-stat-val" style="color:var(--z-kuning)" id="sb-kuning-cnt">12</span>
       </div>
       <div class="sb-ring">
-        <div class="sb-ring-bar"><div class="sb-ring-fill" style="width:27%;background:var(--z-kuning)"></div></div>
+        <div class="sb-ring-bar"><div class="sb-ring-fill" id="sb-kuning-bar" style="width:27%;background:var(--z-kuning)"></div></div>
       </div>
       <div class="sb-stat-row" style="margin-top:8px">
         <span class="sb-stat-label">🟢 Hijau</span>
         <span class="sb-stat-val" style="color:var(--z-hijau)" id="sb-hijau-cnt">14</span>
       </div>
       <div class="sb-ring">
-        <div class="sb-ring-bar"><div class="sb-ring-fill" style="width:32%;background:var(--z-hijau)"></div></div>
-      </div>
-    </div>
-
-    <!-- Climate snapshot -->
-    <div class="sb-widget">
-      <div class="sb-w-title">Iklim Jakarta</div>
-      <div class="sb-climate">
-        <div class="sb-climate-item">
-          <div class="sb-climate-val">29°</div>
-          <div class="sb-climate-lbl">Suhu</div>
-        </div>
-        <div class="sb-climate-item">
-          <div class="sb-climate-val" style="color:var(--c-teal)">82%</div>
-          <div class="sb-climate-lbl">Kelembapan</div>
-        </div>
-        <div class="sb-climate-item">
-          <div class="sb-climate-val" style="color:var(--c-indigo)">248</div>
-          <div class="sb-climate-lbl">CH (mm)</div>
-        </div>
+        <div class="sb-ring-bar"><div class="sb-ring-fill" id="sb-hijau-bar" style="width:32%;background:var(--z-hijau)"></div></div>
       </div>
     </div>
 
@@ -1379,12 +1341,12 @@ body.sb-collapsed .main {
     <div class="sb-widget">
       <div class="sb-w-title">Model Terbaik</div>
       <div class="sb-stat-row">
-        <span class="sb-stat-label">LightGBM</span>
-        <span class="sb-stat-val" style="color:var(--c-blue)">R²=0.77</span>
+        <span class="sb-stat-label" id="sb-model-name">LightGBM</span>
+        <span class="sb-stat-val" style="color:var(--c-blue)" id="sb-model-r2">R²=0.77</span>
       </div>
       <div class="sb-stat-row">
         <span class="sb-stat-label">MAE</span>
-        <span class="sb-stat-val">2.95 kasus</span>
+        <span class="sb-stat-val" id="sb-model-mae">2.95 kasus</span>
       </div>
       <div class="sb-stat-row">
         <span class="sb-stat-label">Data periode</span>
@@ -3323,6 +3285,14 @@ function updateTicker() {
     html+=`<span class="tick-item"><span class="tick-dot" style="background:${t.color}"></span>${t.text}</span>`;
   });
   inner.innerHTML = html;
+
+  // Sinkronkan widget "Model Terbaik" di sidebar dengan data asli yang sama
+  const sbName = document.getElementById('sb-model-name');
+  const sbR2 = document.getElementById('sb-model-r2');
+  const sbMae = document.getElementById('sb-model-mae');
+  if (sbName) sbName.textContent = best.name;
+  if (sbR2) sbR2.textContent = `R²=${(best.R2||0).toFixed(2)}`;
+  if (sbMae) sbMae.textContent = `${(best.MAE||0).toFixed(2)} kasus`;
 }
 
 // Formula fallback (tanpa real data)
@@ -3390,12 +3360,24 @@ function updateSidebarStats() {
   if (!window._q1Summary) return;
   const q = window._q1Summary;
   if (q.zona_ewars) {
+    const merah = q.zona_ewars.Merah ?? 18;
+    const kuning = q.zona_ewars.Kuning ?? 12;
+    const hijau = q.zona_ewars.Hijau ?? 14;
     const m = document.getElementById('sb-merah-cnt');
     const k = document.getElementById('sb-kuning-cnt');
     const h = document.getElementById('sb-hijau-cnt');
-    if (m) m.textContent = q.zona_ewars.Merah || 18;
-    if (k) k.textContent = q.zona_ewars.Kuning || 12;
-    if (h) h.textContent = q.zona_ewars.Hijau || 14;
+    if (m) m.textContent = merah;
+    if (k) k.textContent = kuning;
+    if (h) h.textContent = hijau;
+
+    // Bar diisi proporsional terhadap total kecamatan, biar representatif
+    const total = (KECAMATAN && KECAMATAN.length) ? KECAMATAN.length : (merah + kuning + hijau) || 44;
+    const mBar = document.getElementById('sb-merah-bar');
+    const kBar = document.getElementById('sb-kuning-bar');
+    const hBar = document.getElementById('sb-hijau-bar');
+    if (mBar) mBar.style.width = Math.min(100, (merah / total) * 100) + '%';
+    if (kBar) kBar.style.width = Math.min(100, (kuning / total) * 100) + '%';
+    if (hBar) hBar.style.width = Math.min(100, (hijau / total) * 100) + '%';
   }
 }
 setTimeout(updateSidebarStats, 1500);
